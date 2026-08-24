@@ -44,7 +44,7 @@ export default function NowPage() {
   const handleComplete = useCallback(async () => {
     setSubmitting(true);
     try {
-      await completeNode(completionType);
+      await completeNode({ status: completionType });
       setShowCompleteDialog(false);
     } finally {
       setSubmitting(false);

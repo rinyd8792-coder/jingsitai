@@ -23,7 +23,7 @@ export default function AppSidebar() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-sm font-medium text-foreground truncate tracking-wide">静思台</div>
-            <div className="text-[11px] text-muted-foreground/80 truncate font-light">一座安静的书房</div>
+            <div className="text-[11px] text-muted-foreground/80 truncate font-light">V0.2 · 个人执行系统</div>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ export default function AppSidebar() {
             const isActive =
               item.path === '/now'
                 ? pathname === '/now' || pathname === '/'
-                : pathname === item.path || pathname.startsWith(`${item.path}/`);
+                : pathname === item.path || pathname.startsWith(`${item.path}/`) || (item.path === '/projects' && pathname.startsWith('/tasks/'));
             return (
               <NavLink
                 key={item.path}

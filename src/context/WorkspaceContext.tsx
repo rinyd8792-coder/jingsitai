@@ -1,22 +1,26 @@
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react';
-import type { ICurrentFocus, ITask, INode, IScratchpad } from '@/data/workspace';
+import type { IAction, ICurrentFocus, IDeliverable, ITask, INode, IScratchpad, NodeCompletionInput } from '@/data/workspace';
 import { fetchCurrentFocus, setCurrentFocus, togglePauseFocus, tickFocus } from '@/lib/api/focus';
 import { fetchTask } from '@/lib/api/tasks';
 import { fetchNode } from '@/lib/api/nodes';
 import { fetchScratchpads, createScratchpad, deleteScratchpad } from '@/lib/api/scratchpads';
 import { completeNode as apiCompleteNode } from '@/lib/api/nodes';
+import { fetchActions } from '@/lib/api/actions';
+import { fetchDeliverables } from '@/lib/api/deliverables';
 
 interface WorkspaceContextValue {
   currentFocus: ICurrentFocus | null;
   currentTask: ITask | null;
   currentNode: INode | null;
   scratchpads: IScratchpad[];
+  actions: IAction[];
+  deliverables: IDeliverable[];
   isLoading: boolean;
   refreshFocus: () => Promise<void>;
   setFocus: (nodeId: string) => Promise<void>;
   togglePause: () => Promise<void>;
   tick: () => Promise<void>;
-  completeNode: (completion?: 'done' | 'partial') => Promise<void>;
+  completeNode: (input: NodeCompletionInput) => Promise<void>;
   addScratchpad: (content: string, type: IScratchpad['type']) => Promise<void>;
   removeScratchpad: (id: string) => Promise<void>;
 }
@@ -29,23 +33,31 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const [currentNode, setCurrentNode] = useState<INode | null>(null);
   const [scratchpads, setScratchpads] = useState<IScratchpad[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [actions, setActions] = useState<IAction[]>([]);
+  const [deliverables, setDeliverables] = useState<IDeliverable[]>([]);
 
   const loadFocusData = useCallback(async (focus: ICurrentFocus | null) => {
     if (!focus) {
       setCurrentTask(null);
       setCurrentNode(null);
       setScratchpads([]);
+      setActions([]);
+      setDeliverables([]);
       return;
     }
     try {
-      const [task, node, pads] = await Promise.all([
+      const [task, node, pads, nodeActions, nodeDeliverables] = await Promise.all([
         fetchTask(focus.taskId),
         fetchNode(focus.nodeId),
         fetchScratchpads(focus.nodeId),
+        fetchActions(focus.nodeId),
+        fetchDeliverables(focus.nodeId),
       ]);
       setCurrentTask(task);
       setCurrentNode(node);
       setScratchpads(pads);
+      setActions(nodeActions);
+      setDeliverables(nodeDeliverables);
     } catch {
       /* ignore */
     }
@@ -82,9 +94,9 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const completeNode = useCallback(async (completion: 'done' | 'partial' = 'done') => {
+  const completeNode = useCallback(async (input: NodeCompletionInput) => {
     if (!currentFocus) return;
-    const result = await apiCompleteNode(currentFocus.nodeId, completion);
+    const result = await apiCompleteNode(currentFocus.nodeId, input);
     if (result.newFocus) {
       const newFocus: ICurrentFocus = {
         nodeId: result.newFocus.nodeId,
@@ -106,6 +118,8 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
 
   const addScratchpad = useCallback(async (content: string, type: IScratchpad['type']) => {
     if (!currentFocus) return;
+      setActions([]);
+      setDeliverables([]);
     const item = await createScratchpad(currentFocus.nodeId, content, type);
     setScratchpads((prev) => [item, ...prev]);
   }, [currentFocus]);
@@ -130,6 +144,8 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     togglePause,
     tick,
     completeNode,
+    actions,
+    deliverables,
     addScratchpad,
     removeScratchpad,
   };

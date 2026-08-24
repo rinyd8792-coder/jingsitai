@@ -153,7 +153,7 @@ export default function ProjectsPage() {
                             >
                               <ChevronRight className={`size-3.5 text-muted-foreground transition-transform shrink-0 ${taskExpanded ? 'rotate-90' : ''}`} />
                               <div className="flex-1 min-w-0">
-                                <div className="text-sm font-medium text-foreground truncate">{task.title}</div>
+                                <button onClick={(event) => { event.stopPropagation(); navigate('/tasks/' + task.id); }} className="text-sm font-medium text-foreground truncate hover:text-primary">{task.title}</button>
                               </div>
                               <span className={`text-xs px-2 py-0.5 rounded-md font-light shrink-0 ${task.status === 'doing' ? 'bg-primary/10 text-primary' : 'border border-border/60 text-muted-foreground'}`}>
                                 {TASK_STATUS_LABEL[task.status]}

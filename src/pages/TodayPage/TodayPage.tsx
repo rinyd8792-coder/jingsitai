@@ -4,15 +4,18 @@ import { Calendar, Play, CheckCircle2, Clock, Loader2 } from 'lucide-react';
 import { fetchNodes } from '@/lib/api/nodes';
 import { fetchTasks } from '@/lib/api/tasks';
 import type { INode, ITask } from '@/data/workspace';
+import { useWorkspace } from '@/context/WorkspaceContext';
 
 const PRIORITY_LABEL: Record<INode['priority'], string> = { high: '高', medium: '中', low: '低' };
-const STATUS_LABEL: Record<INode['status'], string> = { pending: '未开始', doing: '进行中', done: '已完成' };
+const STATUS_LABEL: Record<INode['status'], string> = { pending: '未开始', doing: '进行中', partial: '部分完成', waiting: '等待中', paused: '已暂停', done: '已完成', abandoned: '已放弃' };
 
 export default function TodayPage() {
   const navigate = useNavigate();
+  const { setFocus } = useWorkspace();
   const [nodes, setNodes] = useState<INode[]>([]);
   const [taskMap, setTaskMap] = useState<Record<string, ITask>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [focusingId, setFocusingId] = useState<string | null>(null);
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -24,7 +27,7 @@ export default function TodayPage() {
         const map: Record<string, ITask> = {};
         tasksData.forEach((t) => { map[t.id] = t; });
         setTaskMap(map);
-        setNodes(nodesData.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()));
+        setNodes(nodesData.sort((a, b) => new Date(a.plannedStartTime || a.startTime).getTime() - new Date(b.plannedStartTime || b.startTime).getTime()));
       } finally {
         setIsLoading(false);
       }
@@ -32,6 +35,15 @@ export default function TodayPage() {
     load();
   }, [today]);
 
+  const handleStartFocus = async (nodeId: string) => {
+    setFocusingId(nodeId);
+    try {
+      await setFocus(nodeId);
+      navigate('/now');
+    } finally {
+      setFocusingId(null);
+    }
+  };
   const total = nodes.length;
   const doneCount = nodes.filter((n) => n.status === 'done').length;
   const doingCount = nodes.filter((n) => n.status === 'doing').length;
@@ -68,10 +80,14 @@ export default function TodayPage() {
           <div className="space-y-4">
             {nodes.map((node) => {
               const task = taskMap[node.taskId];
-              const startTime = new Date(node.startTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
-              const endTime = new Date(node.estimatedEndTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+              const startTime = new Date(node.plannedStartTime || node.startTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+              const endTime = new Date(node.plannedEndTime || node.estimatedEndTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
               const isDone = node.status === 'done';
               const isDoing = node.status === 'doing';
+              const plannedMinutes = Math.round((new Date(node.plannedEndTime || node.estimatedEndTime).getTime() - new Date(node.plannedStartTime || node.startTime).getTime()) / 60000);
+              const actualMinutes = node.actualStartTime && node.actualEndTime
+                ? Math.round((new Date(node.actualEndTime).getTime() - new Date(node.actualStartTime).getTime()) / 60000)
+                : null;
               return (
                 <div key={node.id} className="relative flex gap-4">
                   <div className="w-16 shrink-0 text-right pt-3">
@@ -88,7 +104,10 @@ export default function TodayPage() {
                         <span className="text-xs px-2 py-0.5 rounded-md border border-border/60 text-muted-foreground font-light">优先级 {PRIORITY_LABEL[node.priority]}</span>
                         {task && <span className="text-xs px-2 py-0.5 rounded-md border border-border/60 text-muted-foreground font-light">{task.title}</span>}
                       </div>
-                      <h3 className={`text-base font-light mt-1 ${isDone ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{node.name}</h3>
+                      <h3 className={`text-base font-light mt-1 ${isDone ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{node.title || node.name}</h3>
+                      <div className="mt-2 text-xs text-muted-foreground">
+                        计划 {plannedMinutes} 分钟 · 实际 {actualMinutes === null ? '进行中 / 未记录' : actualMinutes + ' 分钟'}{node.delayReason ? ' · 延期：' + node.delayReason : ''}
+                      </div>
                       <div className="mt-3 flex items-center gap-2">
                         {!isDone && (
                           isDoing ? (
@@ -96,7 +115,7 @@ export default function TodayPage() {
                               <Play className="size-3.5" />继续专注
                             </button>
                           ) : (
-                            <button onClick={() => navigate('/now')} className="flex items-center gap-1.5 px-3 h-8 rounded-lg border border-border/60 text-xs font-light hover:bg-muted/50">
+                            <button onClick={() => void handleStartFocus(node.id)} disabled={focusingId === node.id} className="flex items-center gap-1.5 px-3 h-8 rounded-lg border border-border/60 text-xs font-light hover:bg-muted/50 disabled:opacity-50">
                               <Play className="size-3.5" />开始执行
                             </button>
                           )

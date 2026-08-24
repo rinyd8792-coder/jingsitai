@@ -2,9 +2,13 @@
 export type ProjectCategory = 'work' | 'life' | 'family' | 'study';
 export type ProjectStatus = 'active' | 'paused' | 'done' | 'archived';
 export type TaskStatus = 'inbox' | 'next' | 'doing' | 'waiting' | 'done' | 'cancelled';
-export type NodeStatus = 'pending' | 'doing' | 'done';
+export type NodeStatus = 'pending' | 'doing' | 'partial' | 'waiting' | 'paused' | 'done' | 'abandoned';
 export type NodePriority = 'high' | 'medium' | 'low';
 export type ScratchpadType = 'idea' | 'confirm' | 'todo' | 'question' | 'resource' | 'decision';
+export type ActionStatus = 'pending' | 'doing' | 'done' | 'cancelled';
+export type DeliverableType = 'document' | 'link' | 'file' | 'message' | 'other';
+export type CompletionStatus = 'done' | 'partial' | 'waiting' | 'paused' | 'abandoned';
+
 
 export interface IProject {
   id: string;
@@ -13,15 +17,21 @@ export interface IProject {
   category: ProjectCategory;
   status: ProjectStatus;
   createdAt: string;
+  createdTime?: string;
 }
 
 export interface ITask {
   id: string;
   title: string;
+  description?: string;
   type: string;
   projectId: string | null;
   status: TaskStatus;
   deadline?: string;
+  currentNodeId?: string;
+  receiver?: string;
+  url?: string;
+  createdTime?: string;
   deliverable?: string;
   deliverTo?: string;
   completionCriteria?: string;
@@ -29,6 +39,9 @@ export interface ITask {
   expectedResume?: string;
   nextAction?: string;
   createdAt: string;
+  waitingObject?: string;
+  expectedResumeTime?: string;
+  followUpAction?: string;
 }
 
 export interface INode {
@@ -36,10 +49,16 @@ export interface INode {
   name: string;
   taskId: string;
   status: NodeStatus;
+  title?: string;
   startTime: string;
   estimatedEndTime: string;
   actualEndTime?: string;
   output?: string;
+  plannedStartTime?: string;
+  plannedEndTime?: string;
+  actualStartTime?: string;
+  unresolved?: string;
+  delayReason?: string;
   priority: NodePriority;
   order: number;
 }
@@ -50,10 +69,52 @@ export interface IScratchpad {
   content: string;
   type: ScratchpadType;
   createdAt: string;
+  createdTime?: string;
+}
+
+export interface IAction {
+  id: string;
+  nodeId: string;
+  content: string;
+  plannedTime?: string;
+  status: ActionStatus;
+  completedTime?: string;
+  createdTime: string;
+}
+
+export interface IDeliverable {
+  id: string;
+  nodeId: string;
+  name: string;
+  type: DeliverableType;
+  url?: string;
+  receiver?: string;
+  deadline?: string;
+}
+
+export interface INodeReview {
+  id: string;
+  nodeId: string;
+  status: CompletionStatus;
+  output?: string;
+  unresolved?: string;
+  nextAction?: string;
+  continueTime?: string;
+  createdTime: string;
+}
+
+export interface NodeCompletionInput {
+  status: CompletionStatus;
+  output?: string;
+  unresolved?: string;
+  nextAction?: string;
+  continueTime?: string;
+  waitingObject?: string;
 }
 
 export interface IInboxItem {
   id: string;
+  createdTime?: string;
   content: string;
   note?: string;
   createdAt: string;
@@ -186,6 +247,19 @@ export const MOCK_SCRATCHPADS: IScratchpad[] = [
   { id: 'sp-005', nodeId: 'node-003', content: '如何量化口碑增长效果？需要和数据团队对齐指标', type: 'question', createdAt: todayAt(15, 20) },
   { id: 'sp-006', nodeId: 'node-003', content: '下周一起草执行计划的时间节点', type: 'todo', createdAt: todayAt(15, 35) },
 ];
+
+export const MOCK_ACTIONS: IAction[] = [
+  { id: 'action-001', nodeId: 'node-003', content: '补充增长数据作为策略依据', plannedTime: todayAt(15, 20), status: 'pending', createdTime: todayAt(14, 10) },
+  { id: 'action-002', nodeId: 'node-003', content: '确认核心指标定义', plannedTime: todayAt(15, 40), status: 'pending', createdTime: todayAt(14, 12) },
+  { id: 'action-003', nodeId: 'node-004', content: '先完成目录页与结论页', plannedTime: todayAt(16), status: 'pending', createdTime: todayAt(14, 15) },
+];
+
+export const MOCK_DELIVERABLES: IDeliverable[] = [
+  { id: 'deliverable-001', nodeId: 'node-003', name: '策略框架草稿', type: 'document', receiver: '项目负责人', deadline: todayAt(16) },
+  { id: 'deliverable-002', nodeId: 'node-005', name: '完整方案初稿', type: 'file', receiver: '项目负责人', deadline: todayAt(18) },
+];
+
+export const MOCK_REVIEWS: INodeReview[] = [];
 
 export const MOCK_INBOX_ITEMS: IInboxItem[] = [
   { id: 'inbox-001', content: '补充日常用品', note: '整理待购买清单', createdAt: todayAt(8, 30), status: 'active' },

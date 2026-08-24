@@ -18,12 +18,20 @@ export function createTask(data: Partial<ITask> & { title: string }): Promise<IT
   const list = mockStore.getTasks();
   const newItem: ITask = {
     id: `task-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+    description: data.description || '',
     title: data.title,
     type: data.type || '',
     projectId: data.projectId ?? null,
     status: (data.status as ITask['status']) || 'next',
     deadline: data.deadline,
     deliverable: data.deliverable,
+    currentNodeId: data.currentNodeId,
+    receiver: data.receiver || data.deliverTo,
+    url: data.url,
+    createdTime: new Date().toISOString(),
+    waitingObject: data.waitingObject,
+    expectedResumeTime: data.expectedResumeTime || data.expectedResume,
+    followUpAction: data.followUpAction || data.nextAction,
     deliverTo: data.deliverTo,
     completionCriteria: data.completionCriteria,
     createdAt: new Date().toISOString(),
@@ -59,7 +67,7 @@ export function resumeWaitingTask(taskId: string, targetStatus = 'next'): Promis
   const idx = list.findIndex((t) => t.id === taskId);
   if (idx === -1) return Promise.reject({ error: 'NotFound', message: '任务不存在' });
   const newStatus = targetStatus as ITask['status'];
-  list[idx] = { ...list[idx], status: newStatus };
+  list[idx] = { ...list[idx], status: newStatus, waitingReason: undefined, waitingObject: undefined };
   mockStore.saveTasks(list);
   return delay({ success: true, status: newStatus });
 }

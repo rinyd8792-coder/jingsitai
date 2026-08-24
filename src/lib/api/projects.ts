@@ -21,6 +21,7 @@ export function createProject(data: { name: string; description?: string; catego
     category: (data.category as IProject['category']) || 'work',
     status: (data.status as IProject['status']) || 'active',
     createdAt: new Date().toISOString(),
+    createdTime: new Date().toISOString(),
   };
   list.unshift(newItem);
   mockStore.saveProjects(list);

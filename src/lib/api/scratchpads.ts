@@ -5,7 +5,7 @@ export function fetchScratchpads(nodeId: string): Promise<IScratchpad[]> {
   const list = mockStore
     .getScratchpads()
     .filter((s) => s.nodeId === nodeId)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    .sort((a, b) => new Date(b.createdTime || b.createdAt).getTime() - new Date(a.createdTime || a.createdAt).getTime());
   return delay(list);
 }
 
@@ -17,6 +17,7 @@ export function createScratchpad(nodeId: string, content: string, type: Scratchp
     content,
     type,
     createdAt: new Date().toISOString(),
+    createdTime: new Date().toISOString(),
   };
   list.unshift(newItem);
   mockStore.saveScratchpads(list);

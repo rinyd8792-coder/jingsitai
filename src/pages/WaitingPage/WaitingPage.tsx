@@ -47,7 +47,7 @@ export default function WaitingPage() {
           <Clock className="size-6 text-primary" strokeWidth={1.5} />
           待续
         </h1>
-        <p className="text-sm text-muted-foreground mt-1 font-light">那些挂起的事情，知道何时回来找它们</p>
+        <p className="text-sm text-muted-foreground mt-1 font-light">管理外部依赖：在等待时也始终保留下一次跟进动作</p>
       </div>
 
       <div className="flex gap-4 border-b border-border/40 pb-2">
@@ -92,22 +92,26 @@ export default function WaitingPage() {
                 </button>
               </div>
               <div className="mt-3 space-y-2 text-sm">
+                <div className="flex gap-2 text-muted-foreground font-light">
+                  <span className="shrink-0">等待对象：</span>
+                  <span className="text-foreground">{task.waitingObject || '外部依赖'}</span>
+                </div>
                 {task.waitingReason && (
                   <div className="flex gap-2 text-muted-foreground font-light">
                     <span className="shrink-0">等待原因：</span>
                     <span className="text-foreground">{task.waitingReason}</span>
                   </div>
                 )}
-                {task.expectedResume && (
+                {(task.expectedResumeTime || task.expectedResume) && (
                   <div className="flex gap-2 text-muted-foreground font-light">
                     <span className="shrink-0">预计恢复：</span>
-                    <span className="text-foreground">{new Date(task.expectedResume).toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })}</span>
+                    <span className="text-foreground">{new Date((task.expectedResumeTime || task.expectedResume)!).toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })}</span>
                   </div>
                 )}
-                {task.nextAction && (
+                {(task.followUpAction || task.nextAction) && (
                   <div className="flex gap-2 text-muted-foreground font-light">
-                    <span className="shrink-0">下一动作：</span>
-                    <span className="text-foreground">{task.nextAction}</span>
+                    <span className="shrink-0">下一跟进动作：</span>
+                    <span className="text-foreground">{task.followUpAction || task.nextAction}</span>
                   </div>
                 )}
               </div>

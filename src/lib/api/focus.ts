@@ -12,12 +12,19 @@ export function setCurrentFocus(nodeId: string): Promise<ICurrentFocus> {
   const nodes = mockStore.getNodes();
   const idx = nodes.findIndex((n) => n.id === nodeId);
   if (idx !== -1) {
-    nodes[idx] = { ...nodes[idx], status: 'doing' };
+    nodes[idx] = { ...nodes[idx], status: 'doing', actualStartTime: nodes[idx].actualStartTime || new Date().toISOString() };
     mockStore.saveNodes(nodes);
   }
 
-  const totalMs = new Date(node.estimatedEndTime).getTime() - new Date(node.startTime).getTime();
+  const totalMs = new Date(node.plannedEndTime || node.estimatedEndTime).getTime() - new Date(node.plannedStartTime || node.startTime).getTime();
   const totalSeconds = Math.max(60, Math.floor(totalMs / 1000));
+
+  const tasks = mockStore.getTasks();
+  const taskIndex = tasks.findIndex((task) => task.id === node.taskId);
+  if (taskIndex !== -1) {
+    tasks[taskIndex] = { ...tasks[taskIndex], status: 'doing', currentNodeId: node.id };
+    mockStore.saveTasks(tasks);
+  }
 
   const focus: ICurrentFocus = {
     nodeId: node.id,

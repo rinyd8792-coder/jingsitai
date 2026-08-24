@@ -1,12 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Layout } from "@/components/Layout";
-import NowPage from "@/pages/NowPage/NowPage";
+import NowPage from "@/pages/NowPage/NowV2Page";
 import InboxPage from "@/pages/InboxPage/InboxPage";
 import TodayPage from "@/pages/TodayPage/TodayPage";
 import WaitingPage from "@/pages/WaitingPage/WaitingPage";
 import ProjectsPage from "@/pages/ProjectsPage/ProjectsPage";
 import NotFoundPage from "@/pages/NotFoundPage/NotFoundPage";
+import TaskDetailPage from "@/pages/TaskDetailPage/TaskDetailPage";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="inbox" element={<InboxPage />} />
           <Route path="today" element={<TodayPage />} />
           <Route path="waiting" element={<WaitingPage />} />
+          <Route path="tasks/:taskId" element={<TaskDetailPage />} />
           <Route path="projects" element={<ProjectsPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
