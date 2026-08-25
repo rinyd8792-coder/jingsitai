@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { WorkspaceProvider } from '@/context/WorkspaceContext';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import LoginPage from '@/pages/LoginPage/LoginPage';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 import TaskComposer from '@/components/TaskComposer/TaskComposer';
 
 function ProtectedContent() {
+  const navigate = useNavigate();
   const { isAuthenticated, isLoading, user, logout } = useAuth();
   const [taskComposerOpen, setTaskComposerOpen] = useState(false);
 
@@ -29,7 +30,10 @@ function ProtectedContent() {
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
           <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-border/40 bg-background/70 backdrop-blur-lg px-6">
-            <button onClick={() => setTaskComposerOpen(true)} className="h-9 px-3 rounded-lg bg-primary text-primary-foreground text-sm font-light flex items-center gap-2 hover:bg-primary/90"><Plus className="size-4" />新建任务</button>
+            <button onClick={() => setTaskComposerOpen(true)} className="h-9 px-3 rounded-lg bg-primary text-primary-foreground text-sm font-light flex items-center gap-2 hover:bg-primary/90">
+              <Plus className="size-4" />
+              新建任务
+            </button>
             <div className="flex-1" />
             <div className="flex items-center gap-3">
               <span className="text-sm text-foreground font-light">{user?.name}</span>
@@ -44,10 +48,16 @@ function ProtectedContent() {
               {new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
             </div>
           </header>
+
           <main className="flex-1 w-full overflow-y-auto px-6 md:px-10 lg:px-16 py-8">
             <Outlet />
           </main>
-          <TaskComposer open={taskComposerOpen} onClose={() => setTaskComposerOpen(false)} />
+
+          <TaskComposer
+            open={taskComposerOpen}
+            onClose={() => setTaskComposerOpen(false)}
+            onCreated={() => navigate('/tasks')}
+          />
         </div>
       </div>
     </WorkspaceProvider>

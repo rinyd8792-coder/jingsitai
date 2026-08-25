@@ -1,10 +1,11 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Leaf, Inbox, Calendar, Clock, FolderOpen, User, Settings } from 'lucide-react';
+import { Leaf, Inbox, ListTodo, Calendar, Clock, FolderOpen, User, Settings } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 const NAV_ITEMS = [
   { path: '/now', label: '当下', icon: Leaf, hint: '当前执行' },
   { path: '/inbox', label: '拾思', icon: Inbox, hint: '收件箱' },
+  { path: '/tasks', label: '待办', icon: ListTodo, hint: '所有待推进事项' },
   { path: '/today', label: '今日', icon: Calendar, hint: '今日计划' },
   { path: '/waiting', label: '待续', icon: Clock, hint: '待续列表' },
   { path: '/projects', label: '长物', icon: FolderOpen, hint: '项目管理' },
@@ -33,15 +34,20 @@ export default function AppSidebar() {
         <div className="space-y-1">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
+            const isTaskDetail = pathname.startsWith('/tasks/');
             const isActive =
               item.path === '/now'
                 ? pathname === '/now' || pathname === '/'
-                : pathname === item.path || pathname.startsWith(`${item.path}/`) || (item.path === '/projects' && pathname.startsWith('/tasks/'));
+                : item.path === '/tasks'
+                  ? pathname === '/tasks' || isTaskDetail
+                  : pathname === item.path || pathname.startsWith(`${item.path}/`);
+
             return (
               <NavLink
                 key={item.path}
                 to={item.path}
-                end={item.path === '/now'}
+                end={item.path === '/now' || item.path === '/tasks'}
+                title={item.hint}
                 className={`flex items-center gap-3 h-10 px-3 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-primary/10 text-primary'
