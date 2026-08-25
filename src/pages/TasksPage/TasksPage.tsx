@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
+  Bot,
   CheckCircle2,
   CircleDot,
   Clock3,
@@ -14,6 +15,7 @@ import {
 import { toast } from 'sonner';
 import { fetchTasks, updateTask } from '@/lib/api/tasks';
 import { fetchNodes } from '@/lib/api/nodes';
+import AITaskBreakdown from '@/components/AITaskBreakdown/AITaskBreakdown';
 import type { INode, ITask, TaskStatus } from '@/data/workspace';
 
 const STATUS_LABEL: Record<TaskStatus, string> = {
@@ -35,8 +37,7 @@ const TYPE_LABEL: Record<string, string> = {
 
 function formatDeadline(value?: string) {
   if (!value) return '未设置截止时间';
-  const date = new Date(value);
-  return date.toLocaleString('zh-CN', {
+  return new Date(value).toLocaleString('zh-CN', {
     month: 'numeric',
     day: 'numeric',
     hour: '2-digit',
@@ -51,6 +52,7 @@ export default function TasksPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'active' | TaskStatus>('active');
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [aiTask, setAiTask] = useState<ITask | null>(null);
 
   async function load() {
     setLoading(true);
@@ -212,7 +214,7 @@ export default function TasksPage() {
                       </span>
                       {isSimple && !isDone && (
                         <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] text-primary">
-                          可直接完成
+                          可直接完成 / 可拆节点
                         </span>
                       )}
                     </div>
@@ -257,13 +259,23 @@ export default function TasksPage() {
                       </button>
                     )}
 
+                    {!isDone && !nodeCount && (
+                      <button
+                        onClick={() => setAiTask(task)}
+                        className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-primary/30 bg-primary/[0.04] px-3 text-xs text-primary hover:bg-primary/[0.08]"
+                      >
+                        <Bot className="size-3.5" />
+                        AI 拆节点
+                      </button>
+                    )}
+
                     {!isDone && (
                       <button
                         onClick={() => navigate(`/tasks/${task.id}`)}
                         className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-border px-3 text-xs hover:border-primary/40 hover:bg-primary/[0.03]"
                       >
                         {nodeCount ? <Play className="size-3.5" /> : <Route className="size-3.5" />}
-                        {nodeCount ? '查看执行' : '拆节点'}
+                        {nodeCount ? '查看执行' : '自己拆'}
                       </button>
                     )}
                   </div>
@@ -276,8 +288,15 @@ export default function TasksPage() {
 
       <div className="rounded-2xl border border-dashed border-border p-5 text-sm font-light leading-6 text-muted-foreground">
         <strong className="font-medium text-foreground">执行规则：</strong>
-        买东西、回消息这类简单事项可以直接完成；方案、作品集、项目推进等复杂事项进入任务详情后再拆成 Node，并进入 Focus。
+        买东西、回消息这类简单事项可以直接完成；方案、作品集、项目推进等复杂事项可以自己拆节点，也可以先让 AI 给建议，再由你确认。
       </div>
+
+      <AITaskBreakdown
+        task={aiTask}
+        open={Boolean(aiTask)}
+        onClose={() => setAiTask(null)}
+        onApplied={(taskId) => navigate(`/tasks/${taskId}`)}
+      />
     </div>
   );
 }

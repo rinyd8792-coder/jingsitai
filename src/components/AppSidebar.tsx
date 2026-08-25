@@ -25,7 +25,7 @@ export default function AppSidebar() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-sm font-medium text-foreground truncate tracking-wide">静思台</div>
-            <div className="text-[11px] text-muted-foreground/80 truncate font-light">V0.2 · 个人执行系统</div>
+            <div className="text-[11px] text-muted-foreground/80 truncate font-light">V0.2.3 · 个人执行系统</div>
           </div>
         </div>
       </div>

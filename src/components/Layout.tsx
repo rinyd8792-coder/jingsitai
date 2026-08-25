@@ -30,7 +30,10 @@ function ProtectedContent() {
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
           <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-border/40 bg-background/70 backdrop-blur-lg px-6">
-            <button onClick={() => setTaskComposerOpen(true)} className="h-9 px-3 rounded-lg bg-primary text-primary-foreground text-sm font-light flex items-center gap-2 hover:bg-primary/90">
+            <button
+              onClick={() => setTaskComposerOpen(true)}
+              className="h-9 px-3 rounded-lg bg-primary text-primary-foreground text-sm font-light flex items-center gap-2 hover:bg-primary/90"
+            >
               <Plus className="size-4" />
               新建任务
             </button>
