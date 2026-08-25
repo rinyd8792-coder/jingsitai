@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Leaf, Inbox, Calendar, Clock, FolderOpen, User } from 'lucide-react';
+import { Leaf, Inbox, Calendar, Clock, FolderOpen, User, Settings } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 const NAV_ITEMS = [
@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { path: '/today', label: '今日', icon: Calendar, hint: '今日计划' },
   { path: '/waiting', label: '待续', icon: Clock, hint: '待续列表' },
   { path: '/projects', label: '长物', icon: FolderOpen, hint: '项目管理' },
+  { path: '/settings', label: '设置', icon: Settings, hint: 'AI 与连接' },
 ];
 
 export default function AppSidebar() {

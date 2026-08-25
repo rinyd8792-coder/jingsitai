@@ -1,6 +1,9 @@
-import { useState, useEffect, type FormEvent } from 'react';
-import { Plus, Trash2, CheckCircle, Inbox, Loader2 } from 'lucide-react';
+import { useState, useEffect, useRef, type FormEvent } from 'react';
+import { Plus, Trash2, CheckCircle, Inbox, Loader2, ArrowRight } from 'lucide-react';
 import { fetchInboxItems, createInboxItem, processInboxItem, deleteInboxItem } from '@/lib/api/inbox';
+import { useSearchParams } from 'react-router-dom';
+import TaskComposer, { type TaskComposerPreset } from '@/components/TaskComposer/TaskComposer';
+import { toast } from 'sonner';
 import type { IInboxItem } from '@/data/workspace';
 
 export default function InboxPage() {
@@ -11,6 +14,11 @@ export default function InboxPage() {
   const [submitting, setSubmitting] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [showNoteInput, setShowNoteInput] = useState(false);
+  const [taskComposerOpen, setTaskComposerOpen] = useState(false);
+  const [taskPreset, setTaskPreset] = useState<TaskComposerPreset>();
+  const [sourceInboxId, setSourceInboxId] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const capturedRef = useRef(false);
 
   const loadItems = async () => {
     setIsLoading(true);
@@ -23,6 +31,18 @@ export default function InboxPage() {
   };
 
   useEffect(() => { loadItems(); }, []);
+
+  useEffect(() => {
+    if (capturedRef.current || searchParams.get('capture') !== '1') return;
+    capturedRef.current = true;
+    const title = searchParams.get('title') || '网页待办';
+    const url = searchParams.get('url') || '';
+    createInboxItem(title, url ? `来源网页：${url}` : undefined).then((item) => {
+      setItems((prev) => [item, ...prev]);
+      toast.success('网页已收入拾思');
+      setSearchParams({}, { replace: true });
+    });
+  }, [searchParams, setSearchParams]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -42,6 +62,13 @@ export default function InboxPage() {
   const handleProcess = async (id: string) => {
     await processInboxItem(id);
     setItems((prev) => prev.filter((i) => i.id !== id));
+  };
+
+  const openAsTask = (item: IInboxItem) => {
+    const urlMatch = item.note?.match(/https?:\/\/\S+/);
+    setTaskPreset({ title: item.content, description: item.note || '', url: urlMatch?.[0] });
+    setSourceInboxId(item.id);
+    setTaskComposerOpen(true);
   };
 
   const handleDelete = async () => {
@@ -109,6 +136,9 @@ export default function InboxPage() {
                 </p>
               </div>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button onClick={() => openAsTask(item)} title="转为任务" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-primary">
+                  <ArrowRight className="size-4" />
+                </button>
                 <button onClick={() => handleProcess(item.id)} title="标记已整理" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-emerald-600">
                   <CheckCircle className="size-4" />
                 </button>
@@ -120,6 +150,8 @@ export default function InboxPage() {
           ))}
         </div>
       )}
+
+      <TaskComposer open={taskComposerOpen} preset={taskPreset} onClose={() => { setTaskComposerOpen(false); setSourceInboxId(null); }} onCreated={() => { if (sourceInboxId) handleProcess(sourceInboxId); setSourceInboxId(null); }} />
 
       {deleteId && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50" onClick={() => setDeleteId(null)}>

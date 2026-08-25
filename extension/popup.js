@@ -1,0 +1,2 @@
+const APP='https://rinyd8792-coder.github.io/jingsitai/#/inbox';
+(async()=>{const [tab]=await chrome.tabs.query({active:true,currentWindow:true});const title=tab?.title||'网页待办';const url=tab?.url||'';document.getElementById('page').textContent=title;document.getElementById('capture').onclick=()=>{const params=new URLSearchParams({capture:'1',title,url});chrome.tabs.create({url:`${APP}?${params.toString()}`});window.close();};})();

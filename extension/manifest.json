@@ -1,0 +1,8 @@
+{
+  "manifest_version": 3,
+  "name": "静思台 · 网页拾思",
+  "version": "0.1.0",
+  "description": "把当前网页一键送入静思台拾思（Inbox）",
+  "permissions": ["activeTab", "tabs"],
+  "action": { "default_title": "收入静思台", "default_popup": "popup.html" }
+}
