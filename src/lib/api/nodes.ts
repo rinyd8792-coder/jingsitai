@@ -1,12 +1,13 @@
 import { mockStore, delay } from './mock-store';
 import type { INode, NodeCompletionInput } from '@/data/workspace';
+import { localDateKey } from '@/lib/utils';
 
 export function fetchNodes(params?: { taskId?: string; date?: string }): Promise<INode[]> {
   let list = mockStore.getNodes();
   if (params?.taskId) list = list.filter((n) => n.taskId === params.taskId);
   if (params?.date) {
     list = list.filter((n) => {
-      const startDate = new Date(n.plannedStartTime || n.startTime).toISOString().split('T')[0];
+      const startDate = localDateKey(n.plannedStartTime || n.startTime);
       return startDate === params.date;
     });
   }
@@ -85,14 +86,32 @@ export function completeNode(id: string, input: NodeCompletionInput): Promise<Co
 
   const now = new Date().toISOString();
   const current = nodes[index];
-  const shouldAdvance = input.status === 'done' || input.status === 'partial';
+  const shouldAdvance = input.status === 'done' || input.status === 'abandoned';
+  const originalDurationMs = Math.max(
+    60_000,
+    new Date(current.plannedEndTime || current.estimatedEndTime).getTime()
+      - new Date(current.plannedStartTime || current.startTime).getTime(),
+  );
+
+  let plannedStartTime = current.plannedStartTime || current.startTime;
+  let plannedEndTime = current.plannedEndTime || current.estimatedEndTime;
+  if (!shouldAdvance && input.continueTime) {
+    const resumeAt = new Date(input.continueTime);
+    if (!Number.isNaN(resumeAt.getTime())) {
+      plannedStartTime = resumeAt.toISOString();
+      plannedEndTime = new Date(resumeAt.getTime() + originalDurationMs).toISOString();
+    }
+  }
+
   nodes[index] = {
     ...current,
     status: input.status,
-    actualEndTime: now,
+    actualEndTime: shouldAdvance ? now : current.actualEndTime,
     output: input.output || current.output,
     unresolved: input.unresolved || current.unresolved,
     delayReason: input.status === 'partial' ? input.unresolved : current.delayReason,
+    plannedStartTime,
+    plannedEndTime,
   };
 
   const nextNode = shouldAdvance
@@ -141,14 +160,18 @@ export function completeNode(id: string, input: NodeCompletionInput): Promise<Co
     const allFinished = taskNodes.length > 0 && taskNodes.every((node) => node.status === 'done' || node.status === 'abandoned');
     const taskStatus = input.status === 'waiting' || input.status === 'paused'
       ? 'waiting'
-      : allFinished
-        ? 'done'
-        : 'doing';
+      : input.status === 'partial'
+        ? 'next'
+        : allFinished
+          ? 'done'
+          : 'doing';
     tasks[taskIndex] = {
       ...tasks[taskIndex],
       status: taskStatus,
       currentNodeId: nextNode?.id || id,
-      waitingObject: input.waitingObject || tasks[taskIndex].waitingObject,
+      waitingObject: input.status === 'waiting' || input.status === 'paused'
+        ? (input.waitingObject || tasks[taskIndex].waitingObject)
+        : undefined,
       expectedResumeTime: input.continueTime || tasks[taskIndex].expectedResumeTime,
       followUpAction: input.nextAction || tasks[taskIndex].followUpAction,
     };
@@ -168,6 +191,7 @@ export function completeNode(id: string, input: NodeCompletionInput): Promise<Co
     return delay({ success: true, reviewId, newFocus });
   }
 
+  // 部分完成 / 等待 / 暂停都先退出 NOW，保留当前节点，等待继续时间重新进入。
   mockStore.saveCurrentFocus(null);
   return delay({ success: true, reviewId, newFocus: null });
 }

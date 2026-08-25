@@ -1,3 +1,5 @@
+import { localDateKey } from '@/lib/utils';
+
 // 数据类型定义
 export type ProjectCategory = 'work' | 'life' | 'family' | 'study';
 export type ProjectStatus = 'active' | 'paused' | 'done' | 'archived';
@@ -133,7 +135,7 @@ export interface ICurrentFocus {
 
 // 今天的日期辅助
 const today = new Date();
-const dateStr = today.toISOString().split('T')[0];
+const dateStr = localDateKey(today);
 function todayAt(hour: number, minute = 0) {
   return new Date(`${dateStr}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`).toISOString();
 }

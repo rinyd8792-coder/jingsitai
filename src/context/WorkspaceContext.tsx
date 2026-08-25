@@ -1,6 +1,6 @@
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useRef, type ReactNode } from 'react';
 import type { IAction, ICurrentFocus, IDeliverable, ITask, INode, IScratchpad, NodeCompletionInput } from '@/data/workspace';
-import { fetchCurrentFocus, setCurrentFocus, togglePauseFocus, tickFocus } from '@/lib/api/focus';
+import { fetchCurrentFocus, setCurrentFocus, togglePauseFocus, persistFocusElapsed } from '@/lib/api/focus';
 import { fetchTask } from '@/lib/api/tasks';
 import { fetchNode } from '@/lib/api/nodes';
 import { fetchScratchpads, createScratchpad, deleteScratchpad } from '@/lib/api/scratchpads';
@@ -35,6 +35,8 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [actions, setActions] = useState<IAction[]>([]);
   const [deliverables, setDeliverables] = useState<IDeliverable[]>([]);
+  const ticksSincePersistRef = useRef(0);
+  const focusRef = useRef<ICurrentFocus | null>(null);
 
   const loadFocusData = useCallback(async (focus: ICurrentFocus | null) => {
     if (!focus) {
@@ -67,6 +69,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     try {
       const focus = await fetchCurrentFocus();
+      focusRef.current = focus;
       setCurrentFocusState(focus);
       await loadFocusData(focus);
     } finally {
@@ -76,21 +79,35 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
 
   const setFocus = useCallback(async (nodeId: string) => {
     const focus = await setCurrentFocus(nodeId);
+    focusRef.current = focus;
     setCurrentFocusState(focus);
     await loadFocusData(focus);
   }, [loadFocusData]);
 
   const togglePause = useCallback(async () => {
-    const result = await togglePauseFocus();
-    setCurrentFocusState((prev) => (prev ? { ...prev, isPaused: result.isPaused } : null));
+    const elapsedSeconds = focusRef.current?.elapsedSeconds;
+    const result = await togglePauseFocus(elapsedSeconds);
+    ticksSincePersistRef.current = 0;
+    setCurrentFocusState((prev) => {
+      const next = prev ? { ...prev, isPaused: result.isPaused } : null;
+      focusRef.current = next;
+      return next;
+    });
   }, []);
 
   const tick = useCallback(async () => {
-    const result = await tickFocus(1);
-    if (result.elapsedSeconds !== undefined) {
-      setCurrentFocusState((prev) =>
-        prev ? { ...prev, elapsedSeconds: result.elapsedSeconds! } : null,
-      );
+    const focus = focusRef.current;
+    if (!focus || focus.isPaused) return;
+
+    const nextElapsed = Math.min(focus.elapsedSeconds + 1, focus.totalSeconds);
+    const nextFocus = { ...focus, elapsedSeconds: nextElapsed };
+    focusRef.current = nextFocus;
+    setCurrentFocusState(nextFocus);
+
+    ticksSincePersistRef.current += 1;
+    if (ticksSincePersistRef.current >= 30 || nextElapsed >= focus.totalSeconds) {
+      ticksSincePersistRef.current = 0;
+      await persistFocusElapsed(nextElapsed);
     }
   }, []);
 
@@ -106,20 +123,22 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         elapsedSeconds: result.newFocus.elapsedSeconds,
         isPaused: result.newFocus.isPaused,
       };
+      focusRef.current = newFocus;
       setCurrentFocusState(newFocus);
       await loadFocusData(newFocus);
     } else {
+      focusRef.current = null;
       setCurrentFocusState(null);
       setCurrentTask(null);
       setCurrentNode(null);
       setScratchpads([]);
+      setActions([]);
+      setDeliverables([]);
     }
   }, [currentFocus, loadFocusData]);
 
   const addScratchpad = useCallback(async (content: string, type: IScratchpad['type']) => {
     if (!currentFocus) return;
-      setActions([]);
-      setDeliverables([]);
     const item = await createScratchpad(currentFocus.nodeId, content, type);
     setScratchpads((prev) => [item, ...prev]);
   }, [currentFocus]);
@@ -132,6 +151,13 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     refreshFocus();
   }, [refreshFocus]);
+
+  useEffect(() => {
+    return () => {
+      const focus = focusRef.current;
+      if (focus) void persistFocusElapsed(focus.elapsedSeconds);
+    };
+  }, [currentFocus?.nodeId]);
 
   const value: WorkspaceContextValue = {
     currentFocus,

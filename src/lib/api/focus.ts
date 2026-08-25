@@ -38,22 +38,30 @@ export function setCurrentFocus(nodeId: string): Promise<ICurrentFocus> {
   return delay(focus);
 }
 
-export function togglePauseFocus(): Promise<{ isPaused: boolean }> {
+export function togglePauseFocus(elapsedSeconds?: number): Promise<{ isPaused: boolean }> {
   const focus = mockStore.getCurrentFocus();
   if (!focus) return Promise.reject({ error: 'NotFound', message: '当前无专注任务' });
   const newPaused = !focus.isPaused;
   mockStore.saveCurrentFocus({
     ...focus,
+    elapsedSeconds: elapsedSeconds ?? focus.elapsedSeconds,
     isPaused: newPaused,
     pausedAt: newPaused ? new Date().toISOString() : undefined,
   });
   return delay({ isPaused: newPaused });
 }
 
+export function persistFocusElapsed(elapsedSeconds: number): Promise<{ elapsedSeconds?: number; skipped?: boolean }> {
+  const focus = mockStore.getCurrentFocus();
+  if (!focus) return delay({ skipped: true });
+  const nextElapsed = Math.min(Math.max(0, elapsedSeconds), focus.totalSeconds);
+  mockStore.saveCurrentFocus({ ...focus, elapsedSeconds: nextElapsed });
+  return delay({ elapsedSeconds: nextElapsed });
+}
+
+// 保留兼容接口：仅供旧页面使用。新 NOW 页面采用本地每秒计时 + 低频持久化。
 export function tickFocus(seconds = 1): Promise<{ elapsedSeconds?: number; skipped?: boolean }> {
   const focus = mockStore.getCurrentFocus();
   if (!focus || focus.isPaused) return delay({ skipped: true });
-  const newElapsed = Math.min(focus.elapsedSeconds + seconds, focus.totalSeconds);
-  mockStore.saveCurrentFocus({ ...focus, elapsedSeconds: newElapsed });
-  return delay({ elapsedSeconds: newElapsed });
+  return persistFocusElapsed(focus.elapsedSeconds + seconds);
 }

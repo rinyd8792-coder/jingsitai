@@ -66,8 +66,27 @@ export function resumeWaitingTask(taskId: string, targetStatus = 'next'): Promis
   const list = mockStore.getTasks();
   const idx = list.findIndex((t) => t.id === taskId);
   if (idx === -1) return Promise.reject({ error: 'NotFound', message: '任务不存在' });
+
+  const task = list[idx];
   const newStatus = targetStatus as ITask['status'];
-  list[idx] = { ...list[idx], status: newStatus, waitingReason: undefined, waitingObject: undefined };
+  list[idx] = {
+    ...task,
+    status: newStatus,
+    waitingReason: undefined,
+    waitingObject: undefined,
+    expectedResumeTime: undefined,
+  };
   mockStore.saveTasks(list);
+
+  // Waiting / Paused 节点恢复后回到“待执行”，由用户重新进入 Focus。
+  if (task.currentNodeId) {
+    const nodes = mockStore.getNodes();
+    const nodeIndex = nodes.findIndex((node) => node.id === task.currentNodeId);
+    if (nodeIndex !== -1 && (nodes[nodeIndex].status === 'waiting' || nodes[nodeIndex].status === 'paused')) {
+      nodes[nodeIndex] = { ...nodes[nodeIndex], status: 'pending' };
+      mockStore.saveNodes(nodes);
+    }
+  }
+
   return delay({ success: true, status: newStatus });
 }

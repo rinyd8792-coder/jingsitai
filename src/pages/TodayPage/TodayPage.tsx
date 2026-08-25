@@ -5,6 +5,7 @@ import { fetchNodes } from '@/lib/api/nodes';
 import { fetchTasks } from '@/lib/api/tasks';
 import type { INode, ITask } from '@/data/workspace';
 import { useWorkspace } from '@/context/WorkspaceContext';
+import { localDateKey } from '@/lib/utils';
 
 const PRIORITY_LABEL: Record<INode['priority'], string> = { high: '高', medium: '中', low: '低' };
 const STATUS_LABEL: Record<INode['status'], string> = { pending: '未开始', doing: '进行中', partial: '部分完成', waiting: '等待中', paused: '已暂停', done: '已完成', abandoned: '已放弃' };
@@ -17,7 +18,7 @@ export default function TodayPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [focusingId, setFocusingId] = useState<string | null>(null);
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = localDateKey();
 
   useEffect(() => {
     const load = async () => {
