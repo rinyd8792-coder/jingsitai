@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import { Layout } from "@/components/Layout";
 import NowPage from "@/pages/NowPage/NowV2Page";
 import InboxPage from "@/pages/InboxPage/InboxPage";
+import CapturePage from "@/pages/CapturePage/CapturePage";
 import TasksPage from "@/pages/TasksPage/TasksPage";
 import TodayPage from "@/pages/TodayPage/TodayPage";
 import WaitingPage from "@/pages/WaitingPage/WaitingPage";
@@ -19,6 +20,7 @@ export default function App() {
           <Route index element={<Navigate to="/now" replace />} />
           <Route path="now" element={<NowPage />} />
           <Route path="inbox" element={<InboxPage />} />
+          <Route path="capture" element={<CapturePage />} />
           <Route path="tasks" element={<TasksPage />} />
           <Route path="today" element={<TodayPage />} />
           <Route path="waiting" element={<WaitingPage />} />

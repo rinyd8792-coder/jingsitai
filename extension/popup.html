@@ -1,1 +1,27 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:system-ui;margin:0;padding:16px;width:280px;background:#F5F2ED;color:#2C2C2C}button{width:100%;height:40px;border:0;border-radius:10px;background:#8BA888;color:#fff;cursor:pointer}p{font-size:12px;color:#777;line-height:1.6}</style></head><body><strong>静思台 · 网页拾思</strong><p id="page">读取当前网页…</p><button id="capture">收入拾思</button><script src="popup.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    *{box-sizing:border-box} body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;width:340px;background:#F5F2ED;color:#2C2C2C}.wrap{padding:18px}.eyebrow{font-size:11px;letter-spacing:.16em;color:#8BA888;text-transform:uppercase}h1{font-size:16px;font-weight:500;margin:6px 0 0}.page{margin:14px 0;padding:12px;border:1px solid #DED9D0;border-radius:12px;background:#FAF8F5}.title{font-size:13px;line-height:1.5;max-height:40px;overflow:hidden}.url{font-size:10px;color:#8A867F;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hint{font-size:11px;color:#777;line-height:1.6;margin:10px 0 14px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}button{height:40px;border-radius:10px;cursor:pointer;font-size:13px}#quick{border:1px solid #CFC9C0;background:#FAF8F5;color:#4D4A46}#organize{border:0;background:#8BA888;color:#fff}button:disabled{opacity:.55;cursor:default}.selection{margin-top:10px;font-size:10px;color:#8A867F;display:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Jingsitai Capture</div>
+    <h1>网页拾思</h1>
+    <div class="page">
+      <div class="title" id="pageTitle">读取当前网页…</div>
+      <div class="url" id="pageUrl"></div>
+      <div class="selection" id="selectionHint">已捕获选中文本</div>
+    </div>
+    <div class="hint">快速收入只记到 Inbox；“整理后收入”可选择待办、分类、项目、截止时间，并使用 AI 摘要。</div>
+    <div class="actions">
+      <button id="quick">快速收入</button>
+      <button id="organize">整理后收入</button>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
