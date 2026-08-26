@@ -15,7 +15,7 @@ export const PROVIDER_LABELS: Record<AIProvider, string> = {
 export const PROVIDER_DEFAULTS: Record<AIProvider, {
   baseUrl: string;
   model: string;
-  adapter: 'openai-compatible' | 'anthropic' | 'gemini';
+  adapter: 'openai-compatible' | 'anthropic' | 'gemini' | 'proxy';
 }> = {
   openai: {
     baseUrl: 'https://api.openai.com/v1',
@@ -54,8 +54,8 @@ export const PROVIDER_DEFAULTS: Record<AIProvider, {
   },
   'volcengine-coding': {
     baseUrl: 'https://ark.cn-beijing.volces.com/api/coding/v3',
-    model: '',
-    adapter: 'openai-compatible',
+    model: 'glm-5.2',
+    adapter: 'proxy',
   },
   custom: {
     baseUrl: '',

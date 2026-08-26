@@ -21,6 +21,7 @@ export interface AIProfile {
   provider: AIProvider;
   baseUrl: string;
   apiKey: string;
+  proxyUrl?: string;
   model: string;
   enabled: boolean;
 }

@@ -1,0 +1,8 @@
+name = "jingsitai-ai-proxy"
+main = "src/index.ts"
+compatibility_date = "2026-08-01"
+
+[vars]
+VOLC_BASE_URL = "https://ark.cn-beijing.volces.com/api/coding/v3"
+VOLC_MODEL = "glm-5.2"
+ALLOWED_ORIGIN = "https://rinyd8792-coder.github.io"
