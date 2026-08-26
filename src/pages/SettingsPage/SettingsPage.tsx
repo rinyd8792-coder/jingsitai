@@ -1,45 +1,13 @@
-import { useState } from 'react';
-import { Bot, Save, PlugZap, ShieldAlert } from 'lucide-react';
+import { useMemo,useState } from 'react';
+import { Bot,CheckCircle2,Plus,PlugZap,Save,ShieldAlert,Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { loadAISettings, saveAISettings, testAIConnection, type AIProvider } from '@/lib/api/ai-settings';
-
-export default function SettingsPage() {
-  const [settings, setSettings] = useState(loadAISettings);
-  const [testing, setTesting] = useState(false);
-
-  const providerDefaults: Record<AIProvider, { baseUrl: string; model: string }> = {
-    openai: { baseUrl: 'https://api.openai.com/v1', model: 'gpt-5.6' },
-    anthropic: { baseUrl: 'https://api.anthropic.com', model: 'claude-sonnet-4-5' },
-    gemini: { baseUrl: 'https://generativelanguage.googleapis.com', model: 'gemini-2.5-pro' },
-    custom: { baseUrl: '', model: '' },
-  };
-
-  const changeProvider = (provider: AIProvider) => setSettings((s) => ({ ...s, provider, ...providerDefaults[provider] }));
-
-  const save = () => { saveAISettings(settings); toast.success('AI 配置已保存'); };
-  const test = async () => {
-    setTesting(true);
-    try { toast.success(await testAIConnection(settings)); }
-    catch (e) { toast.error(e instanceof Error ? e.message : '连接失败'); }
-    finally { setTesting(false); }
-  };
-
-  return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      <div><h1 className="text-2xl font-light tracking-wide flex items-center gap-2"><Bot className="size-6 text-primary" />设置 · AI</h1><p className="text-sm text-muted-foreground mt-1">为任务拆解、节点复盘和 Inbox 整理预留模型能力</p></div>
-      <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-5">
-        <label className="block space-y-2 text-sm">模型服务商
-          <select value={settings.provider} onChange={(e) => changeProvider(e.target.value as AIProvider)} className="w-full h-11 px-3 rounded-lg border border-border bg-background">
-            <option value="openai">OpenAI</option><option value="anthropic">Anthropic</option><option value="gemini">Gemini</option><option value="custom">自定义 OpenAI-compatible</option>
-          </select>
-        </label>
-        <label className="block space-y-2 text-sm">API Base URL<input value={settings.baseUrl} onChange={(e) => setSettings({ ...settings, baseUrl: e.target.value })} className="w-full h-11 px-3 rounded-lg border border-border bg-background" /></label>
-        <label className="block space-y-2 text-sm">API Key<input type="password" value={settings.apiKey} onChange={(e) => setSettings({ ...settings, apiKey: e.target.value })} placeholder="sk-..." className="w-full h-11 px-3 rounded-lg border border-border bg-background" /></label>
-        <label className="block space-y-2 text-sm">Model<input value={settings.model} onChange={(e) => setSettings({ ...settings, model: e.target.value })} placeholder="模型名称" className="w-full h-11 px-3 rounded-lg border border-border bg-background" /></label>
-        <div className="rounded-xl border border-warning/30 bg-warning/10 p-4 flex gap-3 text-sm text-muted-foreground"><ShieldAlert className="size-5 shrink-0 text-warning" /><p>当前版本配置保存在浏览器 localStorage，仅建议个人测试使用。正式上线应把密钥移到服务端，由后端代理 AI 请求。</p></div>
-        <div className="flex justify-end gap-3"><button onClick={test} disabled={testing} className="h-10 px-4 rounded-lg border border-border flex items-center gap-2 text-sm"><PlugZap className="size-4" />{testing ? '测试中…' : '测试连接'}</button><button onClick={save} className="h-10 px-4 rounded-lg bg-primary text-primary-foreground flex items-center gap-2 text-sm"><Save className="size-4" />保存配置</button></div>
-      </div>
-      <div className="rounded-2xl border border-dashed border-border p-5"><h2 className="font-light">下一步 AI 能力</h2><p className="text-sm text-muted-foreground mt-2 leading-6">① 把复杂任务建议拆成节点；② 节点结束时把 Scratchpad 归纳成结论 / 遗留问题 / Next Action；③ 帮助整理 Inbox，但所有结果由用户确认后写入。</p></div>
-    </div>
-  );
-}
+import { createAIProfile,loadAISettingsV2,saveAISettingsV2,testAIProfile,type AIProfile,type AIProvider,type AIPurpose } from '@/lib/api/ai-settings';
+import { PROVIDER_DEFAULTS,PROVIDER_LABELS } from '@/lib/ai/provider-defaults';
+const PURPOSES:Array<{key:AIPurpose;label:string;hint:string}>=[{key:'planning',label:'任务规划',hint:'复杂任务拆节点，建议使用能力较强的模型'},{key:'webAnalysis',label:'网页分析',hint:'网页摘要、判断资料还是任务'},{key:'review',label:'节点复盘',hint:'Scratchpad → 结论 / 遗留 / Next Action'},{key:'quickClassify',label:'快速分类',hint:'Inbox 分类等低成本任务，可使用更便宜的模型'}];
+export default function SettingsPage(){const [settings,setSettings]=useState(loadAISettingsV2);const [selectedId,setSelectedId]=useState(settings.profiles[0]?.id||'');const [testingId,setTestingId]=useState<string|null>(null);const selected=useMemo(()=>settings.profiles.find(x=>x.id===selectedId)||settings.profiles[0],[selectedId,settings.profiles]);
+ const updateProfile=(id:string,patch:Partial<AIProfile>)=>setSettings(c=>({...c,profiles:c.profiles.map(p=>p.id===id?{...p,...patch}:p)}));
+ const changeProvider=(p:AIProfile,provider:AIProvider)=>{const d=PROVIDER_DEFAULTS[provider];updateProfile(p.id,{provider,baseUrl:d.baseUrl,model:d.model})};
+ const addProfile=()=>{const p=createAIProfile('openai',`模型 ${settings.profiles.length+1}`);setSettings(c=>({...c,profiles:[...c.profiles,p]}));setSelectedId(p.id)};
+ const removeProfile=(id:string)=>{if(settings.profiles.length<=1){toast.error('至少保留一个模型配置');return}const f=settings.profiles.find(x=>x.id!==id)!;setSettings(c=>({profiles:c.profiles.filter(x=>x.id!==id),routing:{planning:c.routing.planning===id?f.id:c.routing.planning,webAnalysis:c.routing.webAnalysis===id?f.id:c.routing.webAnalysis,review:c.routing.review===id?f.id:c.routing.review,quickClassify:c.routing.quickClassify===id?f.id:c.routing.quickClassify}}));setSelectedId(f.id)};
+ const test=async(p:AIProfile)=>{setTestingId(p.id);try{toast.success(await testAIProfile(p))}catch(e){toast.error(e instanceof Error?e.message:'连接失败')}finally{setTestingId(null)}};
+ return <div className="mx-auto max-w-5xl space-y-6"><div><h1 className="flex items-center gap-2 text-2xl font-light tracking-wide"><Bot className="size-6 text-primary"/>设置 · AI 服务</h1><p className="mt-1 text-sm text-muted-foreground">配置多个模型，并决定不同任务由哪个模型处理。</p></div><div className="grid gap-6 lg:grid-cols-[260px_1fr]"><aside className="rounded-2xl border border-border/50 bg-card p-4"><div className="mb-3 flex items-center justify-between"><div className="text-sm font-medium">模型配置</div><button onClick={addProfile} className="flex size-8 items-center justify-center rounded-lg border border-border"><Plus className="size-4"/></button></div><div className="space-y-2">{settings.profiles.map(p=><button key={p.id} onClick={()=>setSelectedId(p.id)} className={`w-full rounded-xl border px-3 py-3 text-left ${selected?.id===p.id?'border-primary/40 bg-primary/[0.05]':'border-border/50'}`}><div className="flex items-center gap-2"><span className="min-w-0 flex-1 truncate text-sm">{p.name}</span>{p.enabled&&<CheckCircle2 className="size-3.5 text-primary"/>}</div><div className="mt-1 truncate text-[11px] text-muted-foreground">{PROVIDER_LABELS[p.provider]} · {p.model||'未选模型'}</div></button>)}</div></aside><div className="space-y-6">{selected&&<section className="rounded-2xl border border-border/50 bg-card p-6"><div className="flex justify-between"><div><h2 className="text-lg font-light">模型连接</h2><p className="mt-1 text-xs text-muted-foreground">DeepSeek、Qwen、GLM 通过 OpenAI-compatible 适配。</p></div><button onClick={()=>removeProfile(selected.id)} className="flex h-9 items-center gap-1.5 rounded-lg border border-border px-3 text-xs"><Trash2 className="size-3.5"/>删除</button></div><div className="mt-5 grid gap-4 md:grid-cols-2"><label className="space-y-2 text-sm">配置名称<input value={selected.name} onChange={e=>updateProfile(selected.id,{name:e.target.value})} className="h-11 w-full rounded-lg border border-border bg-background px-3"/></label><label className="space-y-2 text-sm">服务商<select value={selected.provider} onChange={e=>changeProvider(selected,e.target.value as AIProvider)} className="h-11 w-full rounded-lg border border-border bg-background px-3">{(Object.keys(PROVIDER_LABELS) as AIProvider[]).map(p=><option key={p} value={p}>{PROVIDER_LABELS[p]}</option>)}</select></label><label className="md:col-span-2 space-y-2 text-sm">API Base URL<input value={selected.baseUrl} onChange={e=>updateProfile(selected.id,{baseUrl:e.target.value})} className="h-11 w-full rounded-lg border border-border bg-background px-3"/></label><label className="space-y-2 text-sm">API Key<input type="password" value={selected.apiKey} onChange={e=>updateProfile(selected.id,{apiKey:e.target.value})} className="h-11 w-full rounded-lg border border-border bg-background px-3"/></label><label className="space-y-2 text-sm">Model<input value={selected.model} onChange={e=>updateProfile(selected.id,{model:e.target.value})} className="h-11 w-full rounded-lg border border-border bg-background px-3"/></label><label className="md:col-span-2 flex items-center gap-2 text-sm"><input type="checkbox" checked={selected.enabled} onChange={e=>updateProfile(selected.id,{enabled:e.target.checked})}/>启用这个配置</label></div><div className="mt-5 flex justify-end"><button onClick={()=>void test(selected)} disabled={testingId===selected.id} className="flex h-10 items-center gap-2 rounded-lg border border-border px-4 text-sm"><PlugZap className="size-4"/>{testingId===selected.id?'测试中…':'测试连接'}</button></div></section>}<section className="rounded-2xl border border-border/50 bg-card p-6"><h2 className="text-lg font-light">用途路由</h2><div className="mt-5 space-y-4">{PURPOSES.map(p=><div key={p.key} className="grid gap-2 rounded-xl border border-border/40 p-4 md:grid-cols-[1fr_260px] md:items-center"><div><div className="text-sm">{p.label}</div><div className="mt-1 text-xs text-muted-foreground">{p.hint}</div></div><select value={settings.routing[p.key]} onChange={e=>setSettings(c=>({...c,routing:{...c.routing,[p.key]:e.target.value}}))} className="h-10 rounded-lg border border-border bg-background px-3 text-sm">{settings.profiles.filter(x=>x.enabled).map(x=><option key={x.id} value={x.id}>{x.name} · {x.model}</option>)}</select></div>)}</div></section><div className="flex gap-3 rounded-xl border border-warning/30 bg-warning/10 p-4 text-sm text-muted-foreground"><ShieldAlert className="size-5 shrink-0 text-warning"/><p>API Key 仍保存在 localStorage，只适合个人测试；正式部署应迁移到服务端代理。</p></div><div className="flex justify-end"><button onClick={()=>{saveAISettingsV2(settings);toast.success('AI 服务配置已保存')}} className="flex h-10 items-center gap-2 rounded-lg bg-primary px-4 text-sm text-primary-foreground"><Save className="size-4"/>保存全部配置</button></div></div></div></div>}
