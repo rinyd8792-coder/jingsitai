@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Build V0.2.6 preview"]
+    types: [completed]
+    branches: [feat/v0.2.6-visual-restoration]
 
 permissions:
   contents: read
@@ -16,10 +20,13 @@ concurrency:
 
 jobs:
   build:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout production main
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -30,13 +37,35 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Install dependencies
+      - name: Install production dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build production site
         run: npm run build
 
-      - name: Upload artifact
+      - name: Checkout preview branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/v0.2.6-visual-restoration
+          path: preview-source
+
+      - name: Install preview dependencies
+        working-directory: preview-source
+        run: npm ci
+
+      - name: Build isolated preview
+        working-directory: preview-source
+        env:
+          VITE_DEPLOY_BASE: /jingsitai/preview/
+        run: npm run build
+
+      - name: Copy preview into separate subdirectory
+        run: |
+          mkdir -p dist/preview
+          cp -a preview-source/dist/. dist/preview/
+          printf 'User-agent: *\nDisallow: /jingsitai/preview/\n' > dist/preview/robots.txt
+
+      - name: Upload combined site artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -48,6 +77,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy
+      - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v4
