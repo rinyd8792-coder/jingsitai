@@ -162,7 +162,7 @@ export default function NowV2Page() {
         <div className="mt-9 h-px bg-border/50"><div className="h-px bg-primary transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
         <div className="mt-6 border-t border-border/40 pt-6">
           <div className="mb-2 text-xs tracking-[0.18em] text-muted-foreground">完成的标准</div>
-          <p className="max-w-3xl text-sm font-light leading-7 text-foreground/80">{currentNode.output || currentTask.completionCriteria || currentTask.deliverable || currentTask.description || '完成当前节点所设定的目标，并记录本次产出。'}</p>
+          <p className="max-w-3xl text-sm font-light leading-7 text-foreground/80">{currentTask.completionCriteria || currentTask.deliverable || currentTask.description || '完成当前节点所设定的目标，并记录本次产出。'}</p>
           <p className="mt-2 text-xs text-muted-foreground">已专注 {formatTimer(elapsed)} · 进度 {progress}%</p>
         </div>
       </section>
