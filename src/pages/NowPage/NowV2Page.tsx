@@ -129,7 +129,7 @@ export default function NowV2Page() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8 jingsitai-now">
+    <div className="mx-auto max-w-5xl space-y-8 jingsitai-now">
       <header className="flex items-end justify-between gap-4 pt-5 pb-1">
         <div>
           <h1 className="font-serif text-4xl font-light tracking-[0.25em] text-foreground md:text-5xl">当 下</h1>
@@ -137,19 +137,19 @@ export default function NowV2Page() {
         </div>
         <div className="text-right text-xs tracking-widest text-muted-foreground"><div>此时</div><time className="mt-2 block font-serif text-2xl tracking-normal text-foreground">{formatTime(new Date().toISOString())}</time></div>
       </header>
-      <section className="jingsitai-focus-card relative overflow-hidden rounded-[22px] border border-border/30 bg-card px-7 py-12 md:px-16 md:py-16">
+      <section className="jingsitai-focus-card relative overflow-hidden rounded-[22px] border border-border/30 bg-card px-7 py-10 md:px-12 md:py-12">
         <div className="absolute inset-y-0 left-0 w-1.5 bg-primary/35" aria-hidden="true" />
         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
           <Link to={'/tasks/' + currentTask.id} className="rounded-full border border-border/50 px-3 py-1 text-xs hover:text-primary">{currentTask.title}</Link>
           <span className="text-xs">{currentTask.deliverable || currentTask.description || '当前任务'}</span>
           <span className="ml-auto text-xs">{currentFocus.isPaused ? '已暂停' : '专注中'}</span>
         </div>
-        <h2 className="mt-14 max-w-4xl font-serif text-[clamp(2.2rem,3.9vw,3.3rem)] font-light leading-[1.5] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
+        <h2 className="mt-10 max-w-4xl font-serif text-[clamp(1.9rem,3vw,2.75rem)] font-light leading-[1.55] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
         <p className="mt-2 text-sm tracking-wide text-muted-foreground">{formatTime(plannedStart)} — {formatTime(plannedEnd)}</p>
-        <div className="mt-16 flex flex-wrap items-end justify-between gap-8">
+        <div className="mt-12 flex flex-wrap items-end justify-between gap-8">
           <div>
             <div className="mb-3 text-xs tracking-[0.35em] text-muted-foreground">余 时</div>
-            <div role="timer" aria-label="当前节点剩余时间" className="jingsitai-timer font-serif text-[clamp(5.5rem,10vw,8.9rem)] font-normal leading-[1.03] tracking-[-0.035em] text-foreground tabular-nums">{formatTimer(remaining)}</div>
+            <div role="timer" aria-label="当前节点剩余时间" className="jingsitai-timer font-serif text-[clamp(4rem,6.4vw,5.6rem)] font-normal leading-[1.08] tracking-[-0.035em] text-foreground tabular-nums">{formatTimer(remaining)}</div>
           </div>
           <div className="flex flex-wrap gap-3 pb-1">
             <button onClick={() => void togglePause()} className="inline-flex items-center gap-2 rounded-xl border border-border/60 px-5 py-3 text-sm transition-colors hover:bg-muted/50">
