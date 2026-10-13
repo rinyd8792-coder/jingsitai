@@ -1,7 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Leaf, Inbox, ListTodo, Calendar, Clock, FolderOpen, User, Settings } from 'lucide-react';
+import { Leaf, Inbox, ListTodo, Calendar, Clock, FolderOpen, User, Settings, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { useState } from 'react';
 
 const NAV_ITEMS = [
