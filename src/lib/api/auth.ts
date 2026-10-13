@@ -11,8 +11,8 @@ export interface AuthResponse {
   user: AuthUser;
 }
 
-const USERS_KEY = '__pew_local_users';
-const ACTIVE_USER_KEY = '__pew_active_user';
+const USERS_KEY = '__jingsitai_preview_pew_local_users';
+const ACTIVE_USER_KEY = '__jingsitai_preview_pew_active_user';
 
 interface LocalUser {
   id: string;
