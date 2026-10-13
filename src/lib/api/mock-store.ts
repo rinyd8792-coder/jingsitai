@@ -22,18 +22,18 @@ import type {
 } from '@/data/workspace';
 
 const KEYS = {
-  projects: '__pew_projects',
-  tasks: '__pew_tasks',
-  nodes: '__pew_nodes',
-  scratchpads: '__pew_scratchpads',
-  actions: '__pew_actions',
-  deliverables: '__pew_deliverables',
-  reviews: '__pew_reviews',
-  inboxItems: '__pew_inbox_items',
-  currentFocus: '__pew_current_focus',
-  user: '__pew_user',
-  seeded: '__pew_seeded',
-  version: '__pew_data_version',
+  projects: '__jingsitai_preview_pew_projects',
+  tasks: '__jingsitai_preview_pew_tasks',
+  nodes: '__jingsitai_preview_pew_nodes',
+  scratchpads: '__jingsitai_preview_pew_scratchpads',
+  actions: '__jingsitai_preview_pew_actions',
+  deliverables: '__jingsitai_preview_pew_deliverables',
+  reviews: '__jingsitai_preview_pew_reviews',
+  inboxItems: '__jingsitai_preview_pew_inbox_items',
+  currentFocus: '__jingsitai_preview_pew_current_focus',
+  user: '__jingsitai_preview_pew_user',
+  seeded: '__jingsitai_preview_pew_seeded',
+  version: '__jingsitai_preview_pew_data_version',
 };
 
 function readList<T>(key: string, fallback: T[]): T[] {
