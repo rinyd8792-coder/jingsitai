@@ -129,63 +129,46 @@ export default function NowV2Page() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6">
-      <section className="overflow-hidden rounded-3xl border border-primary/20 bg-card shadow-sm">
-        <div className="border-b border-border/50 bg-primary/[0.04] px-6 py-4 md:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <div className="text-xs font-medium uppercase tracking-[0.24em] text-primary">Current Focus</div>
-              <Link to={'/tasks/' + currentTask.id} className="mt-1 inline-block text-sm text-muted-foreground hover:text-foreground">
-                {currentTask.title}
-              </Link>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className={['rounded-full px-3 py-1 text-xs', currentFocus.isPaused ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'].join(' ')}>
-                {currentFocus.isPaused ? '已暂停' : '进行中'}
-              </span>
-              <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
-                {formatTime(plannedStart)}–{formatTime(plannedEnd)}
-              </span>
-            </div>
+    <div className="mx-auto max-w-5xl space-y-8 jingsitai-now">
+      <header className="flex items-end justify-between gap-4 pt-5 pb-1">
+        <div>
+          <h1 className="font-serif text-4xl font-light tracking-[0.25em] text-foreground md:text-5xl">当 下</h1>
+          <p className="mt-3 text-sm font-light tracking-widest text-muted-foreground">专注此刻，一物一念</p>
+        </div>
+        <div className="text-right text-xs tracking-widest text-muted-foreground"><div>此时</div><time className="mt-2 block font-serif text-2xl tracking-normal text-foreground">{formatTime(new Date().toISOString())}</time></div>
+      </header>
+      <section className="jingsitai-focus-card relative overflow-hidden rounded-[22px] border border-border/35 bg-card px-7 py-10 md:px-14 md:py-14">
+        <div className="absolute inset-y-0 left-0 w-1.5 bg-primary/35" aria-hidden="true" />
+        <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+          <Link to={'/tasks/' + currentTask.id} className="rounded-full border border-border/50 px-3 py-1 text-xs hover:text-primary">{currentTask.title}</Link>
+          <span className="text-xs">{currentTask.deliverable || currentTask.description || '当前任务'}</span>
+          <span className="ml-auto text-xs">{currentFocus.isPaused ? '已暂停' : '专注中'}</span>
+        </div>
+        <h2 className="mt-10 max-w-3xl font-serif text-[clamp(1.7rem,3.5vw,2.8rem)] font-light leading-[1.6] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
+        <p className="mt-2 text-sm tracking-wide text-muted-foreground">{formatTime(plannedStart)} — {formatTime(plannedEnd)}</p>
+        <div className="mt-12 flex flex-wrap items-end justify-between gap-8">
+          <div>
+            <div className="mb-3 text-xs tracking-[0.35em] text-muted-foreground">余 时</div>
+            <div role="timer" aria-label="当前节点剩余时间" className="jingsitai-timer font-serif text-[clamp(3.5rem,8vw,6.6rem)] font-light leading-none tracking-tight text-foreground tabular-nums">{formatTimer(remaining)}</div>
+          </div>
+          <div className="flex flex-wrap gap-3 pb-1">
+            <button onClick={() => void togglePause()} className="inline-flex items-center gap-2 rounded-xl border border-border/60 px-5 py-3 text-sm transition-colors hover:bg-muted/50">
+              {currentFocus.isPaused ? <Play className="size-4" /> : <Pause className="size-4" />}
+              {currentFocus.isPaused ? '继续' : '暂停'}
+            </button>
+            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-primary/90"><CheckCircle2 className="size-4" />完成节点</button>
           </div>
         </div>
-
-        <div className="grid gap-8 px-6 py-8 md:grid-cols-[1fr_240px] md:px-8">
-          <div>
-            <div className="text-sm text-muted-foreground">当前唯一工作节点</div>
-            <h1 className="mt-2 text-3xl font-light leading-tight tracking-wide text-foreground md:text-4xl">
-              {currentNode.title || currentNode.name}
-            </h1>
-            {currentTask.description && <p className="mt-4 max-w-2xl text-sm font-light leading-7 text-muted-foreground">{currentTask.description}</p>}
-            <div className="mt-7 flex flex-wrap gap-3">
-              <button onClick={() => void togglePause()} className="flex items-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm hover:bg-muted/50">
-                {currentFocus.isPaused ? <Play className="size-4" /> : <Pause className="size-4" />}
-                {currentFocus.isPaused ? '继续 Focus' : '暂停 Focus'}
-              </button>
-              <button onClick={() => setShowCompletion(true)} className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm text-primary-foreground hover:bg-primary/90">
-                <CheckCircle2 className="size-4" />完成节点
-              </button>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-border/60 bg-background/60 p-5">
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span>已专注</span><span>{progress}%</span>
-            </div>
-            <div className="mt-3 font-mono text-3xl font-light tabular-nums">{formatTimer(elapsed)}</div>
-            <div className="mt-1 text-xs text-muted-foreground">剩余 {formatTimer(remaining)}</div>
-            <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-muted">
-              <div className="h-full rounded-full bg-primary transition-all" style={{ width: String(progress) + '%' }} />
-            </div>
-            <div className="mt-4 text-xs leading-5 text-muted-foreground">
-              实际开始：{formatTime(currentNode.actualStartTime || currentFocus.startedAt)}
-            </div>
-          </div>
+        <div className="mt-9 h-px bg-border/50"><div className="h-px bg-primary transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
+        <div className="mt-6 border-t border-border/40 pt-6">
+          <div className="mb-2 text-xs tracking-[0.18em] text-muted-foreground">完成的标准</div>
+          <p className="max-w-3xl text-sm font-light leading-7 text-foreground/80">{currentNode.output || currentTask.completionCriteria || currentTask.deliverable || currentTask.description || '完成当前节点所设定的目标，并记录本次产出。'}</p>
+          <p className="mt-2 text-xs text-muted-foreground">已专注 {formatTimer(elapsed)} · 进度 {progress}%</p>
         </div>
       </section>
 
       <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
-        <section className="rounded-2xl border border-border/60 bg-card p-6">
+        <section className="rounded-[20px] border border-border/35 bg-card p-7">
           <div className="flex items-center gap-2 text-sm font-medium">
             <ArrowRight className="size-4 text-primary" />Next Action
           </div>
@@ -203,7 +186,7 @@ export default function NowV2Page() {
           )}
         </section>
 
-        <section className="rounded-2xl border border-border/60 bg-card p-6">
+        <section className="rounded-[20px] border border-border/35 bg-card p-7">
           <div className="flex items-center gap-2 text-sm font-medium">
             <FileOutput className="size-4 text-primary" />Deliverable
           </div>
@@ -226,7 +209,7 @@ export default function NowV2Page() {
         </section>
       </div>
 
-      <section className="rounded-2xl border border-border/60 bg-card p-6">
+      <section className="rounded-[20px] border border-border/35 bg-card p-7">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-light">过程记录 Scratchpad</h2>
@@ -236,7 +219,7 @@ export default function NowV2Page() {
         </div>
 
         <form onSubmit={submitNote} className="mt-5">
-          <div className="rounded-2xl border border-border bg-background/70 p-3 focus-within:border-primary/50">
+          <div className="rounded-2xl border border-border/30 bg-[#F7F4EE] p-4 focus-within:border-primary/50">
             <textarea value={note} onChange={(event) => setNote(event.target.value)} placeholder="输入想法、问题、待办或资料…" rows={3} className="w-full resize-none bg-transparent px-2 py-1 text-sm outline-none" />
             <div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-t border-border/40 pt-3">
               <div className="flex flex-wrap gap-1.5">
