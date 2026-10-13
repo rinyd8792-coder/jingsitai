@@ -29,3 +29,10 @@
     @apply bg-background text-foreground font-sans antialiased;
   }
 }
+
+/* V0.2.6 · 妙搭视觉基准：东方书房与沉浸专注 */
+.jingsitai-now { letter-spacing: 0.005em; }
+.jingsitai-focus-card { box-shadow: 0 12px 42px -36px rgba(58,53,44,.24); }
+.jingsitai-timer { font-variant-numeric: tabular-nums; }
+.font-serif { font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif; }
+@media (prefers-reduced-motion: reduce) { .jingsitai-now *, .jingsitai-now *::before { transition-duration: 0.01ms !important; } }
