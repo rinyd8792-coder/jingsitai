@@ -19,7 +19,7 @@ export default function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <aside className={`${collapsed ? "w-[76px]" : "w-60"} shrink-0 border-r border-border/35 bg-card/45 flex flex-col transition-[width] duration-300`}>
+    <aside className={`${collapsed ? "w-[76px]" : "w-[264px]"} shrink-0 border-r border-border/35 bg-card/45 flex flex-col transition-[width] duration-300`}>
       <div className="border-b border-border/40 px-4 py-5">
         <div className="flex items-center gap-3">
           <div className="size-9 shrink-0 rounded-full bg-primary/10 text-primary flex items-center justify-center">
@@ -32,7 +32,7 @@ export default function AppSidebar() {
         </div>
       </div>
 
-      <div className="flex justify-end px-3 pb-2"><button onClick={() => setCollapsed(value => !value)} title={collapsed ? "展开侧边栏" : "收起侧边栏"} aria-label={collapsed ? "展开侧边栏" : "收起侧边栏"} className="rounded-lg p-2 text-muted-foreground hover:bg-muted/50">{collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}</button></div>
+      <div className="flex justify-end px-3 pb-3 pt-2"><button onClick={() => setCollapsed(value => !value)} title={collapsed ? "展开侧边栏" : "收起侧边栏"} aria-label={collapsed ? "展开侧边栏" : "收起侧边栏"} className="rounded-lg p-2 text-muted-foreground hover:bg-muted/50">{collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}</button></div>
       <nav className="flex-1 p-3">
         <div className="space-y-1">
           {NAV_ITEMS.map((item) => {
@@ -51,7 +51,7 @@ export default function AppSidebar() {
                 to={item.path}
                 end={item.path === '/now' || item.path === '/tasks'}
                 title={item.hint}
-                className={`flex items-center gap-3 h-11 px-3 rounded-xl transition-colors ${
+                className={`flex items-center gap-3 h-11 px-3 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-primary/10 text-primary'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -66,7 +66,7 @@ export default function AppSidebar() {
       </nav>
 
       <div className="border-t border-border/40 p-3">
-        <div className="flex items-center gap-3 px-1 py-1">
+        <div className="flex items-center gap-3 px-1 py-2">
           <div className="size-8 shrink-0 rounded-full bg-primary/10 text-primary flex items-center justify-center">
             <User className="size-4" strokeWidth={1.5} />
           </div>
