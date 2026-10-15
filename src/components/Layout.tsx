@@ -29,10 +29,10 @@ function ProtectedContent() {
       <div className="flex min-h-screen bg-background">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-border/40 bg-background/70 backdrop-blur-lg px-6">
+          <header className="sticky top-0 z-40 flex h-[72px] items-center gap-3 border-b border-border/30 bg-background/75 backdrop-blur-lg px-6 md:px-8">
             <button
               onClick={() => setTaskComposerOpen(true)}
-              className="h-9 px-3 rounded-lg bg-primary text-primary-foreground text-sm font-light flex items-center gap-2 hover:bg-primary/90"
+              className="h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-light flex items-center gap-2 hover:bg-primary/90"
             >
               <Plus className="size-4" />
               新建任务
@@ -52,7 +52,7 @@ function ProtectedContent() {
             </div>
           </header>
 
-          <main className="flex-1 w-full overflow-y-auto px-6 md:px-10 lg:px-16 py-8">
+          <main className="flex-1 w-full overflow-y-auto px-6 md:px-10 lg:px-14 pt-12 pb-12">
             <Outlet />
           </main>
 
