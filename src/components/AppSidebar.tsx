@@ -27,7 +27,7 @@ export default function AppSidebar() {
           </div>
           <div className={collapsed ? "hidden" : "flex-1 min-w-0"}>
             <div className="text-sm font-medium text-foreground truncate tracking-wide">静思台</div>
-            <div className="text-[11px] text-muted-foreground/80 truncate font-light">一座安静的书房</div>
+            <div className="text-xs text-muted-foreground truncate font-normal">一座安静的书房</div>
           </div>
         </div>
       </div>
@@ -53,12 +53,12 @@ export default function AppSidebar() {
                 title={item.hint}
                 className={`flex items-center gap-3 h-11 px-3 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-primary/10 text-primary'
+                    ? 'bg-[#EBE9DF] text-[#527956]'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}
               >
                 <Icon className="size-4.5 shrink-0" strokeWidth={1.5} />
-                {!collapsed && <span className="text-sm font-light tracking-wide">{item.label}</span>}
+                {!collapsed && <span className="text-sm font-normal tracking-wide">{item.label}</span>}
               </NavLink>
             );
           })}
@@ -71,10 +71,10 @@ export default function AppSidebar() {
             <User className="size-4" strokeWidth={1.5} />
           </div>
           <div className={collapsed ? "hidden" : "flex-1 min-w-0"}>
-            <div className="text-sm font-light truncate text-foreground">
+            <div className="text-sm font-normal truncate text-foreground">
               {user?.name || '访客'}
             </div>
-            <div className="text-[11px] text-muted-foreground/70 truncate font-light">
+            <div className="text-xs text-muted-foreground truncate font-normal">
               今日安好
             </div>
           </div>
