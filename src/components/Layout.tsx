@@ -32,22 +32,22 @@ function ProtectedContent() {
           <header className="sticky top-0 z-40 flex h-[72px] items-center gap-3 border-b border-border/30 bg-background/75 backdrop-blur-lg px-6 md:px-8">
             <button
               onClick={() => setTaskComposerOpen(true)}
-              className="h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-light flex items-center gap-2 hover:bg-primary/90"
+              className="h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-normal flex items-center gap-2 hover:bg-primary/90"
             >
               <Plus className="size-4" />
               新建任务
             </button>
             <div className="flex-1" />
             <div className="flex items-center gap-3">
-              <span className="text-sm text-foreground font-light">{user?.name}</span>
+              <span className="text-sm text-foreground font-normal">{user?.name}</span>
               <button
                 onClick={logout}
-                className="text-xs text-muted-foreground hover:text-foreground font-light transition-colors"
+                className="text-xs text-muted-foreground hover:text-foreground font-normal transition-colors"
               >
                 退出
               </button>
             </div>
-            <div className="text-xs text-muted-foreground/70 font-light tracking-wide">
+            <div className="text-xs text-muted-foreground font-normal tracking-wide">
               {new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
             </div>
           </header>
