@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: process.env.GITHUB_ACTIONS ? '/jingsitai/' : '/',
+  base: process.env.VITE_DEPLOY_BASE || (process.env.GITHUB_ACTIONS ? '/jingsitai/' : '/'),
   resolve: {
     alias: {
       '@': path.resolve(import.meta.dirname, './src'),

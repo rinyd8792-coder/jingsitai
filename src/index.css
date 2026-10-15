@@ -10,18 +10,18 @@
   --color-secondary: #E8E4DD;
   --color-secondary-foreground: #3A3A3A;
   --color-muted: #EDEAE4;
-  --color-muted-foreground: #8A8A8A;
+  --color-muted-foreground: #706E69;
   --color-accent: #D4C5A9;
   --color-accent-foreground: #3A3A3A;
   --color-destructive: #C47B7B;
   --color-destructive-foreground: #FFFFFF;
-  --color-border: #D8D4CC;
+  --color-border: #D5D1C9;
   --color-input: #D8D4CC;
   --color-ring: #8BA888;
   --color-warning: #C4A77D;
   --radius: 0.75rem;
-  --font-sans: "Noto Sans SC", system-ui, -apple-system, sans-serif;
-  --font-serif: "Noto Serif SC", Georgia, serif;
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
+  --font-serif: "Songti SC", "STSong", "Noto Serif CJK SC", "Noto Serif SC", "SimSun", serif;
 }
 
 @layer base {
@@ -29,3 +29,12 @@
     @apply bg-background text-foreground font-sans antialiased;
   }
 }
+
+/* V0.2.6 · 妙搭视觉基准：东方书房与沉浸专注 */
+.jingsitai-now { letter-spacing: 0.005em; }
+.jingsitai-focus-card { box-shadow: 0 12px 42px -36px rgba(58,53,44,.24); }
+.jingsitai-timer { font-variant-numeric: tabular-nums; }
+.font-serif { font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Noto Serif SC", "SimSun", serif; }
+.jingsitai-now .jingsitai-timer { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-feature-settings: "tnum" 1; }
+.jingsitai-now .text-muted-foreground { color: #706E69; }
+@media (prefers-reduced-motion: reduce) { .jingsitai-now *, .jingsitai-now *::before { transition-duration: 0.01ms !important; } }
