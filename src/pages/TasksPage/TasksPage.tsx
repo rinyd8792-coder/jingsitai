@@ -203,7 +203,7 @@ export default function TasksPage() {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h2 className={['text-base font-light', isDone ? 'line-through' : ''].join(' ')}>
+                      <h2 className={['jingsitai-content-title', isDone ? 'line-through' : ''].join(' ')}>
                         {task.title}
                       </h2>
                       <span className="rounded-full border border-border/60 px-2 py-0.5 text-[11px] text-muted-foreground">
