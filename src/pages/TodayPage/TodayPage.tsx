@@ -53,7 +53,7 @@ export default function TodayPage() {
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-light text-foreground tracking-wide flex items-center gap-2">
+          <h1 className="font-serif text-2xl font-normal text-foreground tracking-wide flex items-center gap-2">
             <Calendar className="size-6 text-primary" strokeWidth={1.5} />
             今日
           </h1>
