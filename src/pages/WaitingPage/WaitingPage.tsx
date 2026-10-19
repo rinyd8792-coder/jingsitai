@@ -43,7 +43,7 @@ export default function WaitingPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-light text-foreground tracking-wide flex items-center gap-2">
+        <h1 className="font-serif text-2xl font-normal text-foreground tracking-wide flex items-center gap-2">
           <Clock className="size-6 text-primary" strokeWidth={1.5} />
           待续
         </h1>
@@ -79,7 +79,7 @@ export default function WaitingPage() {
             <div key={task.id} className="bg-card rounded-xl border border-border/40 p-5 hover:shadow-sm transition-shadow">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-base font-light text-foreground">{task.title}</h3>
+                  <h3 className="text-base font-serif font-normal text-foreground">{task.title}</h3>
                   {task.type && <span className="inline-block mt-2 text-xs px-2 py-0.5 rounded-md border border-border/60 text-muted-foreground font-light">{task.type}</span>}
                 </div>
                 <button
