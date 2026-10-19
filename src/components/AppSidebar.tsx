@@ -19,10 +19,10 @@ export default function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <aside className={`${collapsed ? "w-[76px]" : "w-[264px]"} shrink-0 border-r border-border/35 bg-[#FAFCF8] flex flex-col transition-[width] duration-300`}>
+    <aside className={`${collapsed ? "w-[76px]" : "w-[264px]"} shrink-0 border-r border-border/35 bg-[#F5F6EF] flex flex-col transition-[width] duration-300`}>
       <div className="border-b border-border/40 px-4 py-5">
         <div className="flex items-center gap-3">
-          <div className="size-9 shrink-0 rounded-full bg-[#EEF4EC] text-[#6C8A71] flex items-center justify-center">
+          <div className="size-9 shrink-0 rounded-full bg-[#EAF0E7] text-[#6C8A71] flex items-center justify-center">
             <Leaf className="size-5" strokeWidth={1.5} />
           </div>
           <div className={collapsed ? "hidden" : "flex-1 min-w-0"}>
@@ -53,7 +53,7 @@ export default function AppSidebar() {
                 title={item.hint}
                 className={`flex items-center gap-3 h-11 px-3 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-[#EEF4EC] text-[#506B54]'
+                    ? 'bg-[#EAF0E7] text-[#506B54]'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}
               >
@@ -67,7 +67,7 @@ export default function AppSidebar() {
 
       <div className="border-t border-border/40 p-3">
         <div className="flex items-center gap-3 px-1 py-2">
-          <div className="size-8 shrink-0 rounded-full bg-[#EEF4EC] text-[#6C8A71] flex items-center justify-center">
+          <div className="size-8 shrink-0 rounded-full bg-[#EAF0E7] text-[#6C8A71] flex items-center justify-center">
             <User className="size-4" strokeWidth={1.5} />
           </div>
           <div className={collapsed ? "hidden" : "flex-1 min-w-0"}>
