@@ -152,9 +152,9 @@ export default function NowV2Page() {
         </div>
         <h2 className="mt-6 max-w-4xl font-serif text-[clamp(1.9rem,2.9vw,2.85rem)] font-normal leading-[1.55] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
         <p className="mt-2 text-sm font-normal tracking-wide text-muted-foreground">{formatTime(plannedStart)} — {formatTime(plannedEnd)}</p>
-        <div className="mt-7 rounded-2xl focus-action border px-4 py-3">
+        <div className="mt-6 focus-action rounded-xl border px-4 py-3">
           <div className="flex items-center gap-2 focus-action-label text-sm font-medium"><ArrowRight className="size-4" />现在只做这一步</div>
-          <p className="mt-2 text-lg font-medium leading-8 text-foreground">{nextAction?.content || '先完成当前节点的第一个具体动作'}</p>
+          <p className="mt-2 text-lg font-medium leading-8 text-foreground">{nextAction?.content || '尚未设置下一动作，可先从当前节点最小的一步开始'}</p>
         </div>
         <div className="mt-5 flex flex-wrap items-end justify-between gap-5">
           <div>
@@ -169,7 +169,7 @@ export default function NowV2Page() {
             <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#616B5F]"><CheckCircle2 className="size-4" />完成节点</button>
           </div>
         </div>
-        <div className="mt-5 h-px bg-border/50"><div className="h-px bg-primary transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
+        <div className="mt-5 h-1 rounded-full bg-border/45 overflow-hidden"><div className="h-full rounded-full bg-primary/65 transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
         <div className="mt-4 border-t border-border/40 pt-4">
           <div className="mb-2 text-sm tracking-[0.12em] text-muted-foreground">完成的标准</div>
           <p className="max-w-3xl text-[15px] font-normal leading-7 text-foreground/90">{currentTask.completionCriteria || currentTask.deliverable || currentTask.description || '完成当前节点所设定的目标，并记录本次产出。'}</p>
@@ -177,26 +177,7 @@ export default function NowV2Page() {
         </div>
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
-        <section className="rounded-[20px] border border-border/35 bg-card p-7">
-          <div className="flex items-center gap-2 text-sm font-medium">
-            <ArrowRight className="size-4 text-primary" />Next Action
-          </div>
-          {nextAction ? (
-            <div className="mt-4 rounded-2xl bg-primary/[0.06] p-5">
-              <div className="text-lg font-light">{nextAction.content}</div>
-              <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-                <Clock3 className="size-3.5" />预计 {formatDateTime(nextAction.plannedTime)}
-              </div>
-            </div>
-          ) : (
-            <div className="mt-4 rounded-2xl border border-dashed border-border px-5 py-7 text-sm text-muted-foreground">
-              当前节点还没有明确下一动作。结束节点时必须补充一个，才能继续推进。
-            </div>
-          )}
-        </section>
-
-        <section className="rounded-[20px] border border-border/35 bg-card p-7">
+      <section className="rounded-[18px] border border-border/35 bg-card p-6">
           <div className="flex items-center gap-2 text-sm font-medium">
             <FileOutput className="size-4 text-primary" />Deliverable
           </div>
@@ -216,13 +197,12 @@ export default function NowV2Page() {
           ) : (
             <p className="mt-4 text-sm text-muted-foreground">尚未定义交付物，可在任务详情中补充。</p>
           )}
-        </section>
-      </div>
+      </section>
 
-      <section className="rounded-[20px] border border-border/35 bg-card p-7">
+      <section className="rounded-[18px] border border-border/35 bg-card p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-light">过程记录 Scratchpad</h2>
+            <h2 className="font-serif text-xl font-normal">过程记录</h2>
             <p className="mt-1 text-xs text-muted-foreground">快速写下，不要求先整理；节点结束时再统一复盘。</p>
           </div>
           <span className="text-xs text-muted-foreground">{scratchpads.length} 条记录</span>
