@@ -74,7 +74,7 @@ export default function ProjectsPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-light text-foreground tracking-wide flex items-center gap-2">
+        <h1 className="font-serif text-2xl font-normal text-foreground tracking-wide flex items-center gap-2">
           <FolderOpen className="size-6 text-primary" strokeWidth={1.5} />
           长物
         </h1>
@@ -119,7 +119,7 @@ export default function ProjectsPage() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <h3 className="text-lg font-light text-foreground">{project.name}</h3>
+                        <h3 className="text-lg font-serif font-normal text-foreground">{project.name}</h3>
                         <span className="text-xs px-2 py-0.5 rounded-md border border-border/60 text-muted-foreground font-light">{STATUS_LABEL[project.status]}</span>
                         <span className="text-xs px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground font-light">{projTasks.length} 个任务</span>
                       </div>
