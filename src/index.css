@@ -1,23 +1,23 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #F6F5F1;
+  --color-background: #F8F5F1;
   --color-foreground: #2C2C2C;
-  --color-card: #FFFFFF;
+  --color-card: #FBF9F6;
   --color-card-foreground: #2C2C2C;
-  --color-primary: #777F72;
+  --color-primary: #789477;
   --color-primary-foreground: #FFFFFF;
-  --color-secondary: #F0EFEA;
+  --color-secondary: #F3F0EB;
   --color-secondary-foreground: #3A3A3A;
-  --color-muted: #F0EFEA;
+  --color-muted: #F3F0EB;
   --color-muted-foreground: #626660;
   --color-accent: #D5D1C6;
   --color-accent-foreground: #3A3A3A;
   --color-destructive: #C47B7B;
   --color-destructive-foreground: #FFFFFF;
-  --color-border: #E0DED7;
-  --color-input: #E0DED7;
-  --color-ring: #777F72;
+  --color-border: #E6E1DA;
+  --color-input: #E6E1DA;
+  --color-ring: #789477;
   --color-warning: #A7A994;
   --radius: 0.75rem;
   --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
@@ -56,13 +56,13 @@
 @media (prefers-reduced-motion: reduce) { .jingsitai-now *, .jingsitai-now *::before { transition-duration: 0.01ms !important; } }
 
 /* 观夏系安静书房：留白为主，草木色仅用于状态和指引 */
-.jingsitai-focus-card { border-color: #E0DED7; }
-.jingsitai-now .focus-action { background: #F4F3EF; border-color: #E3E0D8; }
-.jingsitai-now .focus-action-label { color: #5E6558; }
-.jingsitai-now .focus-complete { background: #777F72; }
-.jingsitai-now .focus-complete:hover { background: #616B5F; }
+.jingsitai-focus-card { border-color: #E6E1DA; }
+.jingsitai-now .focus-action { background: #F7F4EF; border-color: #E7E0D6; }
+.jingsitai-now .focus-action-label { color: #626963; }
+.jingsitai-now .focus-complete { background: #688C69; }
+.jingsitai-now .focus-complete:hover { background: #577A59; }
 
 /* 统一的大面积表面不染色；保留深浅区分以提升注意力清晰度 */
 :root { color-scheme: light; }
-body { background-color: #F6F5F1; }
-.jingsitai-focus-card { background: #FEFDFC; }
+body { background-color: #F8F5F1; }
+.jingsitai-focus-card { background: #FBF9F6; }
