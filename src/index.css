@@ -1,20 +1,20 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #FCFCF8;
+  --color-background: #F8F8F2;
   --color-foreground: #2C2C2C;
-  --color-card: #FFFFFF;
+  --color-card: #FDFCF9;
   --color-card-foreground: #2C2C2C;
   --color-primary: #789477;
-  --color-primary-foreground: #FFFFFF;
-  --color-secondary: #F5F8F3;
+  --color-primary-foreground: #FDFCF9;
+  --color-secondary: #F1F4ED;
   --color-secondary-foreground: #3A3A3A;
-  --color-muted: #F5F8F3;
+  --color-muted: #F1F4ED;
   --color-muted-foreground: #626660;
   --color-accent: #DCE8DA;
   --color-accent-foreground: #3A3A3A;
   --color-destructive: #C47B7B;
-  --color-destructive-foreground: #FFFFFF;
+  --color-destructive-foreground: #FDFCF9;
   --color-border: #E5EAE2;
   --color-input: #E5EAE2;
   --color-ring: #789477;
@@ -57,15 +57,15 @@
 
 /* 观夏系安静书房：留白为主，草木色仅用于状态和指引 */
 .jingsitai-focus-card { border-color: #E5EAE2; }
-.jingsitai-now .focus-action { background: #F7FAF5; border-color: #E6ECE3; }
+.jingsitai-now .focus-action { background: #F4F6F0; border-color: #E6ECE3; }
 .jingsitai-now .focus-action-label { color: #626963; }
 .jingsitai-now .focus-complete { background: #688C69; }
 .jingsitai-now .focus-complete:hover { background: #577A59; }
 
 /* 统一的大面积表面不染色；保留深浅区分以提升注意力清晰度 */
 :root { color-scheme: light; }
-body { background-color: #FCFCF8; }
-.jingsitai-focus-card { background: #FFFFFF; }
+body { background-color: #F8F8F2; }
+.jingsitai-focus-card { background: #FDFCF9; }
 
 /* V0.2.6 typography consolidation — one editorial family across all sections */
 :root { --jingsitai-editorial-font: "Noto Serif SC", "Songti SC", "STSong", serif; --jingsitai-number-font: Georgia, "Times New Roman", serif; }
