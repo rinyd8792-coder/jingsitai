@@ -67,13 +67,19 @@
 body { background-color: #F8F8F2; }
 .jingsitai-focus-card { background: #FDFCF9; }
 
-/* V0.2.6 typography consolidation — one editorial family across all sections */
-:root { --jingsitai-editorial-font: "Noto Serif SC", "Songti SC", "STSong", serif; --jingsitai-number-font: Georgia, "Times New Roman", serif; }
-#root h1, #root h2, #root h3, #root .jingsitai-content-title, #root .jingsitai-editorial, #root .jingsitai-brand-title {
+/* Editorial type system: the Latin forms use Georgia, Chinese glyphs use serif Song-style faces. */
+:root {
+  --jingsitai-editorial-font: Georgia, "Times New Roman", "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --jingsitai-number-font: Georgia, "Times New Roman", serif;
+}
+#root h1, #root h2, #root h3, #root .font-serif, #root .jingsitai-editorial, #root .jingsitai-brand-title, #root .jingsitai-content-title {
   font-family: var(--jingsitai-editorial-font);
   font-synthesis: none;
+  font-weight: 400;
 }
-#root h1, #root h2, #root h3 { font-weight: 400; }
-#root .tabular-nums:not(.jingsitai-timer) { font-family: var(--jingsitai-number-font); font-variant-numeric: tabular-nums; }
-#root .jingsitai-timer { font-family: var(--jingsitai-number-font); font-variant-numeric: lining-nums tabular-nums; font-weight: 400; }
+#root .jingsitai-brand-title { font-weight: 500; }
+#root .jingsitai-now h1 { letter-spacing: .2em; }
+#root .jingsitai-now h2 { letter-spacing: .055em; }
+#root .jingsitai-timer, #root .tabular-nums { font-family: var(--jingsitai-number-font); font-variant-numeric: lining-nums tabular-nums; }
+#root .jingsitai-timer { font-size: clamp(4.2rem, 6.4vw, 6.2rem); letter-spacing: -.045em; line-height: 1.05; }
 #root button, #root input, #root textarea, #root select { font-family: var(--font-sans); }
