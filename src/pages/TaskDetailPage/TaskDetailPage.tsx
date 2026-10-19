@@ -163,7 +163,7 @@ export default function TaskDetailPage() {
         <div className="mt-5 flex flex-wrap items-start justify-between gap-4">
           <div>
             <div className="text-xs uppercase tracking-[0.2em] text-primary">Task Execution Map</div>
-            <h1 className="mt-2 text-3xl font-light tracking-wide">{task.title}</h1>
+            <h1 className="font-serif mt-2 text-3xl font-normal tracking-wide">{task.title}</h1>
             <p className="mt-3 max-w-2xl text-sm font-light leading-7 text-muted-foreground">{task.description || task.completionCriteria || '还没有任务说明'}</p>
           </div>
           <div className="rounded-2xl border border-border bg-card px-5 py-4 text-right">
@@ -180,7 +180,7 @@ export default function TaskDetailPage() {
       </div>
 
       <section className="rounded-2xl border border-border/60 bg-card p-6">
-        <div className="flex items-center gap-2"><Target className="size-4 text-primary" /><h2 className="text-lg font-light">工作节点</h2></div>
+        <div className="flex items-center gap-2"><Target className="size-4 text-primary" /><h2 className="text-lg font-serif font-normal">工作节点</h2></div>
         <div className="mt-6 space-y-4">
           {nodes.map((node, index) => {
             const nodeActions = actions[node.id] || [];
@@ -196,7 +196,7 @@ export default function TaskDetailPage() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-base font-light">{node.title || node.name}</h3>
+                      <h3 className="text-base font-serif font-normal">{node.title || node.name}</h3>
                       <span className="rounded-full border border-border px-2 py-0.5 text-[11px] text-muted-foreground">{STATUS_LABEL[node.status]}</span>
                       {isCurrent && <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] text-primary">当前节点</span>}
                     </div>
@@ -246,7 +246,7 @@ export default function TaskDetailPage() {
       </section>
 
       <form onSubmit={addWorkNode} className="rounded-2xl border border-border/60 bg-card p-6">
-        <div className="flex items-center gap-2"><Clock3 className="size-4 text-primary" /><h2 className="text-lg font-light">拆分新的工作节点</h2></div>
+        <div className="flex items-center gap-2"><Clock3 className="size-4 text-primary" /><h2 className="text-lg font-serif font-normal">拆分新的工作节点</h2></div>
         <p className="mt-1 text-xs text-muted-foreground">把任务继续拆成一个有明确时间边界、可以直接开始的阶段。</p>
         <div className="mt-4 grid gap-3 md:grid-cols-[1fr_190px_190px_auto]">
           <input required value={newNodeTitle} onChange={(event) => setNewNodeTitle(event.target.value)} placeholder="节点标题" className="rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary" />
@@ -259,7 +259,7 @@ export default function TaskDetailPage() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <form onSubmit={addAction} className="rounded-2xl border border-border/60 bg-card p-6">
-          <div className="flex items-center gap-2"><Plus className="size-4 text-primary" /><h2 className="text-lg font-light">添加下一动作</h2></div>
+          <div className="flex items-center gap-2"><Plus className="size-4 text-primary" /><h2 className="text-lg font-serif font-normal">添加下一动作</h2></div>
           <select value={actionNodeId} onChange={(event) => setActionNodeId(event.target.value)} className="mt-4 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm">
             {nodes.map((node) => <option key={node.id} value={node.id}>{node.title || node.name}</option>)}
           </select>
@@ -268,7 +268,7 @@ export default function TaskDetailPage() {
         </form>
 
         <form onSubmit={addDeliverable} className="rounded-2xl border border-border/60 bg-card p-6">
-          <div className="flex items-center gap-2"><FileOutput className="size-4 text-primary" /><h2 className="text-lg font-light">定义当前交付物</h2></div>
+          <div className="flex items-center gap-2"><FileOutput className="size-4 text-primary" /><h2 className="text-lg font-serif font-normal">定义当前交付物</h2></div>
           <input value={deliverableName} onChange={(event) => setDeliverableName(event.target.value)} placeholder="交付物名称" className="mt-4 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary" />
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <input value={deliverableReceiver} onChange={(event) => setDeliverableReceiver(event.target.value)} placeholder="交付对象" className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary" />
