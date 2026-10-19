@@ -159,7 +159,7 @@ export default function NowV2Page() {
         <div className="mt-5 flex flex-wrap items-end justify-between gap-5">
           <div>
             <div className="mb-3 text-sm tracking-[0.2em] text-muted-foreground">余 时</div>
-            <div role="timer" aria-label="当前节点剩余时间" className="jingsitai-timer font-serif text-[clamp(3.8rem,5.5vw,5rem)] font-normal leading-[1.08] tracking-[-0.035em] text-foreground tabular-nums">{formatFocusRemaining(remaining)}</div>
+            <div role="timer" aria-label="当前节点剩余时间" className="jingsitai-timer text-[clamp(3.8rem,5.5vw,5rem)] font-normal leading-[1.08] tracking-[-0.035em] text-foreground tabular-nums">{formatFocusRemaining(remaining)}</div>
           </div>
           <div className="flex flex-wrap gap-3 pb-1">
             <button onClick={() => void togglePause()} className="inline-flex items-center gap-2 rounded-xl border border-border/60 px-5 py-3 text-sm transition-colors hover:bg-muted/50">
