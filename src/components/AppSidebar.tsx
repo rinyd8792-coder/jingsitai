@@ -22,7 +22,7 @@ export default function AppSidebar() {
     <aside className={`${collapsed ? "w-[76px]" : "w-[264px]"} shrink-0 border-r border-border/35 bg-card/45 flex flex-col transition-[width] duration-300`}>
       <div className="border-b border-border/40 px-4 py-5">
         <div className="flex items-center gap-3">
-          <div className="size-9 shrink-0 rounded-full bg-[#EAE7DF] text-[#817765] flex items-center justify-center">
+          <div className="size-9 shrink-0 rounded-full bg-[#EFF0EB] text-[#798679] flex items-center justify-center">
             <Leaf className="size-5" strokeWidth={1.5} />
           </div>
           <div className={collapsed ? "hidden" : "flex-1 min-w-0"}>
@@ -53,7 +53,7 @@ export default function AppSidebar() {
                 title={item.hint}
                 className={`flex items-center gap-3 h-11 px-3 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-[#EAE7DF] text-[#514B43]'
+                    ? 'bg-[#EFF0EB] text-[#454C44]'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}
               >
