@@ -135,7 +135,7 @@ export default function NowV2Page() {
   }
 
   return (
-    <div className="mx-auto max-w-[920px] space-y-6 jingsitai-now">
+    <div className="mx-auto max-w-[800px] space-y-5 jingsitai-now">
       <header className="flex items-end justify-between gap-4 pt-4 pb-1">
         <div>
           <h1 className="font-serif text-4xl font-normal tracking-[0.18em] text-foreground md:text-5xl">当 下</h1>
@@ -143,20 +143,20 @@ export default function NowV2Page() {
         </div>
         <div className="text-right text-xs font-normal tracking-widest text-muted-foreground"><div>此时</div><time className="mt-2 block font-serif text-2xl tracking-normal text-foreground">{formatTime(new Date().toISOString())}</time></div>
       </header>
-      <section className="jingsitai-focus-card relative overflow-hidden rounded-[18px] border border-border/30 bg-card px-6 py-7 md:px-10 md:py-8">
+      <section className="jingsitai-focus-card relative overflow-hidden rounded-[16px] border border-border/30 bg-card px-5 py-5 md:px-8 md:py-6">
         <div className="absolute inset-y-0 left-0 w-1.5 bg-[#C7D9C6]" aria-hidden="true" />
         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
           <Link to={'/tasks/' + currentTask.id} className="rounded-full border border-border/50 px-3 py-1 text-xs hover:text-primary">{currentTask.title}</Link>
           <span className="text-sm">{currentTask.deliverable || currentTask.description || '当前任务'}</span>
           <span className="ml-auto text-xs">{currentFocus.isPaused ? '已暂停' : '专注中'}</span>
         </div>
-        <h2 className="mt-6 max-w-4xl font-serif text-[clamp(1.9rem,2.9vw,2.85rem)] font-normal leading-[1.55] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
+        <h2 className="mt-4 max-w-4xl font-serif text-[clamp(1.9rem,2.9vw,2.85rem)] font-normal leading-[1.55] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
         <p className="mt-2 text-sm font-normal tracking-wide text-muted-foreground">{formatTime(plannedStart)} — {formatTime(plannedEnd)}</p>
-        <div className="mt-6 focus-action rounded-xl border px-4 py-3">
+        <div className="mt-4 focus-action rounded-xl border px-4 py-2.5">
           <div className="flex items-center gap-2 focus-action-label text-sm font-medium"><ArrowRight className="size-4" />现在只做这一步</div>
           <p className="mt-2 text-lg font-medium leading-8 text-foreground">{nextAction?.content || '尚未设置下一动作，可先从当前节点最小的一步开始'}</p>
         </div>
-        <div className="mt-5 flex flex-wrap items-end justify-between gap-5">
+        <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="mb-3 text-sm tracking-[0.2em] text-muted-foreground">余 时</div>
             <div role="timer" aria-label="当前节点剩余时间" className="jingsitai-timer text-[clamp(3.8rem,5.5vw,5rem)] font-normal leading-[1.08] tracking-[-0.035em] text-foreground tabular-nums">{formatFocusRemaining(remaining)}</div>
@@ -169,8 +169,8 @@ export default function NowV2Page() {
             <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#577A59]"><CheckCircle2 className="size-4" />完成节点</button>
           </div>
         </div>
-        <div className="mt-5 h-1 rounded-full bg-border/45 overflow-hidden"><div className="h-full rounded-full bg-primary/65 transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
-        <div className="mt-4 border-t border-border/40 pt-4">
+        <div className="mt-4 h-1 rounded-full bg-border/45 overflow-hidden"><div className="h-full rounded-full bg-primary/65 transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
+        <div className="mt-3 border-t border-border/40 pt-3">
           <div className="mb-2 text-sm tracking-[0.12em] text-muted-foreground">完成的标准</div>
           <p className="max-w-3xl text-[15px] font-normal leading-7 text-foreground/90">{currentTask.completionCriteria || currentTask.deliverable || currentTask.description || '完成当前节点所设定的目标，并记录本次产出。'}</p>
           <p className="mt-2 text-sm text-muted-foreground">已专注 {formatTimer(elapsed)} · 进度 {progress}%</p>
