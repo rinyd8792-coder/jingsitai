@@ -166,7 +166,7 @@ export default function NowV2Page() {
               {currentFocus.isPaused ? <Play className="size-4" /> : <Pause className="size-4" />}
               {currentFocus.isPaused ? '继续' : '暂停'}
             </button>
-            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#6F6655]"><CheckCircle2 className="size-4" />完成节点</button>
+            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#587263]"><CheckCircle2 className="size-4" />完成节点</button>
           </div>
         </div>
         <div className="mt-5 h-px bg-border/50"><div className="h-px bg-primary transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
