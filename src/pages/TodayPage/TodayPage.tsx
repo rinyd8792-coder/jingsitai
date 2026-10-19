@@ -63,7 +63,7 @@ export default function TodayPage() {
         </div>
         <div className="flex items-center gap-6">
           <div className="text-right"><div className="text-2xl font-light tabular-nums text-foreground">{total}</div><div className="text-xs text-muted-foreground font-light">总节点</div></div>
-          <div className="text-right"><div className="text-2xl font-light tabular-nums text-emerald-600">{doneCount}</div><div className="text-xs text-muted-foreground font-light">已完成</div></div>
+          <div className="text-right"><div className="text-2xl font-light tabular-nums text-[#6E806F]">{doneCount}</div><div className="text-xs text-muted-foreground font-light">已完成</div></div>
           <div className="text-right"><div className="text-2xl font-light tabular-nums text-primary">{doingCount}</div><div className="text-xs text-muted-foreground font-light">进行中</div></div>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function TodayPage() {
                     <div className="text-xs text-muted-foreground font-light">{endTime}</div>
                   </div>
                   <div className="relative shrink-0 z-10">
-                    <div className={`size-4 rounded-full mt-4 border-2 ${isDone ? 'bg-emerald-500 border-emerald-500' : isDoing ? 'bg-primary border-primary animate-pulse' : 'bg-background border-border'}`} />
+                    <div className={`size-4 rounded-full mt-4 border-2 ${isDone ? 'bg-[#819184] border-[#819184]' : isDoing ? 'bg-primary border-primary animate-pulse' : 'bg-background border-border'}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className={`bg-card rounded-xl border p-4 transition-all ${isDone ? 'opacity-60 border-border/40' : isDoing ? 'border-primary/30 bg-primary/[0.02]' : 'border-border/40 hover:border-border'}`}>
