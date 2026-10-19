@@ -144,7 +144,7 @@ export default function NowV2Page() {
         <div className="text-right text-xs font-normal tracking-widest text-muted-foreground"><div>此时</div><time className="mt-2 block font-serif text-2xl tracking-normal text-foreground">{formatTime(new Date().toISOString())}</time></div>
       </header>
       <section className="jingsitai-focus-card relative overflow-hidden rounded-[18px] border border-border/30 bg-card px-6 py-7 md:px-10 md:py-8">
-        <div className="absolute inset-y-0 left-0 w-1.5 bg-[#A5AE9B]" aria-hidden="true" />
+        <div className="absolute inset-y-0 left-0 w-1.5 bg-[#A6AC9D]" aria-hidden="true" />
         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
           <Link to={'/tasks/' + currentTask.id} className="rounded-full border border-border/50 px-3 py-1 text-xs hover:text-primary">{currentTask.title}</Link>
           <span className="text-sm">{currentTask.deliverable || currentTask.description || '当前任务'}</span>
@@ -166,7 +166,7 @@ export default function NowV2Page() {
               {currentFocus.isPaused ? <Play className="size-4" /> : <Pause className="size-4" />}
               {currentFocus.isPaused ? '继续' : '暂停'}
             </button>
-            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#587263]"><CheckCircle2 className="size-4" />完成节点</button>
+            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#616B5F]"><CheckCircle2 className="size-4" />完成节点</button>
           </div>
         </div>
         <div className="mt-5 h-px bg-border/50"><div className="h-px bg-primary transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
@@ -229,7 +229,7 @@ export default function NowV2Page() {
         </div>
 
         <form onSubmit={submitNote} className="mt-5">
-          <div className="rounded-2xl border border-border/30 bg-[#F7F4EE] p-4 focus-within:border-primary/50">
+          <div className="rounded-2xl border border-border/30 bg-[#F6F4EE] p-4 focus-within:border-primary/50">
             <textarea value={note} onChange={(event) => setNote(event.target.value)} placeholder="输入想法、问题、待办或资料…" rows={3} className="w-full resize-none bg-transparent px-2 py-1 text-sm outline-none" />
             <div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-t border-border/40 pt-3">
               <div className="flex flex-wrap gap-1.5">
