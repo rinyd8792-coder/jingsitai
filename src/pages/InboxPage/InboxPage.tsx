@@ -139,7 +139,7 @@ export default function InboxPage() {
                 <button onClick={() => openAsTask(item)} title="转为任务" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-primary">
                   <ArrowRight className="size-4" />
                 </button>
-                <button onClick={() => handleProcess(item.id)} title="标记已整理" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-emerald-600">
+                <button onClick={() => handleProcess(item.id)} title="标记已整理" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-[#6E806F]">
                   <CheckCircle className="size-4" />
                 </button>
                 <button onClick={() => setDeleteId(item.id)} title="删除" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-destructive">
