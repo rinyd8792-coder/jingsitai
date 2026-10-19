@@ -39,6 +39,10 @@
 .jingsitai-now h1.font-serif, .jingsitai-now h2.font-serif { font-synthesis: none; }
 .jingsitai-now h2.font-serif { letter-spacing: 0.025em; }
 /* 只让展示性标题拥有纸本文学感，正文和操作仍为易读黑体 */
-.jingsitai-brand-title { font-family: "LXGW WenKai", "Kaiti SC", "KaiTi", "Songti SC", serif; font-weight: 500; }
+.jingsitai-brand-title, .jingsitai-editorial { font-family: "LXGW WenKai", "Kaiti SC", "KaiTi", "Songti SC", serif; font-weight: 400; }
+.jingsitai-brand-title { font-weight: 500; }
+/* 高层级文字用文楷；工具文字和正文继续黑体，避免功能信息变得含糊 */
+.jingsitai-editorial { font-synthesis: none; }
+
 .jingsitai-now .text-muted-foreground { color: #706E69; }
 @media (prefers-reduced-motion: reduce) { .jingsitai-now *, .jingsitai-now *::before { transition-duration: 0.01ms !important; } }
