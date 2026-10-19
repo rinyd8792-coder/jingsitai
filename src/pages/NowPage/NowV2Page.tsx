@@ -138,7 +138,7 @@ export default function NowV2Page() {
     <div className="mx-auto max-w-[1040px] space-y-8 jingsitai-now">
       <header className="flex items-end justify-between gap-4 pt-8 pb-1">
         <div>
-          <h1 className="font-serif text-4xl font-light tracking-[0.25em] text-foreground md:text-5xl">当 下</h1>
+          <h1 className="font-serif text-4xl font-normal tracking-[0.18em] text-foreground md:text-5xl">当 下</h1>
           <p className="mt-3 text-sm font-normal tracking-widest text-muted-foreground">专注此刻，一物一念</p>
         </div>
         <div className="text-right text-xs font-normal tracking-widest text-muted-foreground"><div>此时</div><time className="mt-2 block font-serif text-2xl tracking-normal text-foreground">{formatTime(new Date().toISOString())}</time></div>
@@ -150,7 +150,7 @@ export default function NowV2Page() {
           <span className="text-sm">{currentTask.deliverable || currentTask.description || '当前任务'}</span>
           <span className="ml-auto text-xs">{currentFocus.isPaused ? '已暂停' : '专注中'}</span>
         </div>
-        <h2 className="mt-11 max-w-4xl font-serif text-[clamp(1.9rem,2.9vw,2.85rem)] font-light leading-[1.55] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
+        <h2 className="mt-11 max-w-4xl font-serif text-[clamp(1.9rem,2.9vw,2.85rem)] font-normal leading-[1.55] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
         <p className="mt-2 text-sm font-normal tracking-wide text-muted-foreground">{formatTime(plannedStart)} — {formatTime(plannedEnd)}</p>
         <div className="mt-7 rounded-2xl border border-primary/25 bg-[#F0F2E9] px-5 py-4">
           <div className="flex items-center gap-2 text-sm font-medium text-[#416B4E]"><ArrowRight className="size-4" />现在只做这一步</div>
