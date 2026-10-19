@@ -1,23 +1,23 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #F8FAF9;
+  --color-background: #F6F5F1;
   --color-foreground: #2C2C2C;
   --color-card: #FFFFFF;
   --color-card-foreground: #2C2C2C;
-  --color-primary: #85927B;
+  --color-primary: #777F72;
   --color-primary-foreground: #FFFFFF;
-  --color-secondary: #F0F3F1;
+  --color-secondary: #F0EFEA;
   --color-secondary-foreground: #3A3A3A;
-  --color-muted: #F0F3F1;
+  --color-muted: #F0EFEA;
   --color-muted-foreground: #626660;
-  --color-accent: #DDE6DF;
+  --color-accent: #D5D1C6;
   --color-accent-foreground: #3A3A3A;
   --color-destructive: #C47B7B;
   --color-destructive-foreground: #FFFFFF;
-  --color-border: #DEE4E0;
-  --color-input: #DEE4E0;
-  --color-ring: #85927B;
+  --color-border: #E0DED7;
+  --color-input: #E0DED7;
+  --color-ring: #777F72;
   --color-warning: #A7A994;
   --radius: 0.75rem;
   --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
@@ -55,9 +55,14 @@
 .jingsitai-now .text-muted-foreground { color: #626660; }
 @media (prefers-reduced-motion: reduce) { .jingsitai-now *, .jingsitai-now *::before { transition-duration: 0.01ms !important; } }
 
-/* 妙搭纸色体系：颜色主要由米白和暖灰组成，鼠尾草绿仅作细节 */
-.jingsitai-focus-card { border-color: #DEE4E0; }
-.jingsitai-now .focus-action { background: #F5F8F6; border-color: #DFE7E1; }
-.jingsitai-now .focus-action-label { color: #50695D; }
-.jingsitai-now .focus-complete { background: #718B7C; }
-.jingsitai-now .focus-complete:hover { background: #587263; }
+/* 观夏系安静书房：留白为主，草木色仅用于状态和指引 */
+.jingsitai-focus-card { border-color: #E0DED7; }
+.jingsitai-now .focus-action { background: #F4F3EF; border-color: #E3E0D8; }
+.jingsitai-now .focus-action-label { color: #5E6558; }
+.jingsitai-now .focus-complete { background: #777F72; }
+.jingsitai-now .focus-complete:hover { background: #616B5F; }
+
+/* 统一的大面积表面不染色；保留深浅区分以提升注意力清晰度 */
+:root { color-scheme: light; }
+body { background-color: #F6F5F1; }
+.jingsitai-focus-card { background: #FEFDFC; }
