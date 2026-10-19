@@ -1,23 +1,23 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #F5F2ED;
+  --color-background: #F5F2EC;
   --color-foreground: #2C2C2C;
   --color-card: #FAF8F5;
   --color-card-foreground: #2C2C2C;
-  --color-primary: #8BA888;
+  --color-primary: #817764;
   --color-primary-foreground: #FFFFFF;
   --color-secondary: #E8E4DD;
   --color-secondary-foreground: #3A3A3A;
-  --color-muted: #EDEAE4;
+  --color-muted: #EEEAE3;
   --color-muted-foreground: #706E69;
-  --color-accent: #D4C5A9;
+  --color-accent: #D9CCB6;
   --color-accent-foreground: #3A3A3A;
   --color-destructive: #C47B7B;
   --color-destructive-foreground: #FFFFFF;
   --color-border: #D5D1C9;
   --color-input: #D8D4CC;
-  --color-ring: #8BA888;
+  --color-ring: #948A76;
   --color-warning: #C4A77D;
   --radius: 0.75rem;
   --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
