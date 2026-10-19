@@ -191,7 +191,7 @@ export default function TaskDetailPage() {
             return (
               <article key={node.id} className={['rounded-2xl border p-5', isCurrent ? 'border-primary/40 bg-primary/[0.03]' : 'border-border/50'].join(' ')}>
                 <div className="flex flex-wrap items-start gap-4">
-                  <div className={['flex size-8 shrink-0 items-center justify-center rounded-full text-sm', node.status === 'done' ? 'bg-emerald-100 text-emerald-700' : isCurrent ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'].join(' ')}>
+                  <div className={['flex size-8 shrink-0 items-center justify-center rounded-full text-sm', node.status === 'done' ? 'bg-[#EEF1EB] text-[#536C57]' : isCurrent ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'].join(' ')}>
                     {node.status === 'done' ? <Check className="size-4" /> : index + 1}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -206,7 +206,7 @@ export default function TaskDetailPage() {
                       <span>实际耗时 {actualMinutes === null ? '进行中 / 未记录' : String(actualMinutes) + ' 分钟'}</span>
                     </div>
                     {node.output && <div className="mt-3 rounded-lg bg-muted/50 px-3 py-2 text-xs">输出：{node.output}</div>}
-                    {node.unresolved && <div className="mt-2 text-xs text-amber-700">遗留：{node.unresolved}</div>}
+                    {node.unresolved && <div className="mt-2 text-xs text-[#897856]">遗留：{node.unresolved}</div>}
 
                     <div className="mt-4 grid gap-4 md:grid-cols-2">
                       <div>
@@ -214,7 +214,7 @@ export default function TaskDetailPage() {
                         <div className="mt-2 space-y-2">
                           {nodeActions.length ? nodeActions.map((action) => (
                             <button key={action.id} onClick={() => void toggleAction(action)} className="flex w-full items-start gap-2 rounded-lg border border-border/40 px-3 py-2 text-left text-xs hover:bg-muted/40">
-                              {action.status === 'done' ? <Check className="mt-0.5 size-3.5 text-emerald-600" /> : <Circle className="mt-0.5 size-3.5 text-muted-foreground" />}
+                              {action.status === 'done' ? <Check className="mt-0.5 size-3.5 text-[#6E806F]" /> : <Circle className="mt-0.5 size-3.5 text-muted-foreground" />}
                               <span className={action.status === 'done' ? 'line-through text-muted-foreground' : ''}>{action.content}</span>
                             </button>
                           )) : <div className="text-xs text-muted-foreground">尚无下一动作</div>}
