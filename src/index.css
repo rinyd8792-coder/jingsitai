@@ -21,7 +21,7 @@
   --color-warning: #A7A994;
   --radius: 0.75rem;
   --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
-  --font-serif: "LXGW WenKai", "Kaiti SC", "KaiTi", "Songti SC", serif;
+  --font-serif: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
 }
 
 @layer base {
@@ -30,25 +30,25 @@
   }
 }
 
-/* V0.2.6 · 妙搭视觉基准：东方书房与沉浸专注 */
+/* V0.2.6 · 妙搭视觉：宋体印刷标题 + Georgia 衬线数字 */
 .jingsitai-now { letter-spacing: 0.005em; }
 .jingsitai-focus-card { box-shadow: 0 12px 42px -36px rgba(58,53,44,.24); }
 .jingsitai-timer { font-variant-numeric: tabular-nums; }
 .font-serif, .jingsitai-editorial, .jingsitai-brand-title {
-  font-family: "LXGW WenKai", "Kaiti SC", "KaiTi", "Songti SC", serif;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
   font-weight: 400;
   font-synthesis: none;
 }
 .jingsitai-brand-title { font-weight: 500; }
 .jingsitai-content-title {
-  font-family: "LXGW WenKai", "Kaiti SC", "KaiTi", "Songti SC", serif;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
   font-weight: 400;
   font-size: 1.125rem;
   line-height: 1.65;
   letter-spacing: 0.015em;
 }
 .jingsitai-ui-text { font-family: var(--font-sans); font-weight: 400; }
-.jingsitai-now .jingsitai-timer { font-family: "DM Mono", "Courier New", monospace; font-weight: 400; font-feature-settings: "tnum" 1; letter-spacing: -0.045em; }
+.jingsitai-now .jingsitai-timer { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.025em; }
 .jingsitai-now h1.font-serif, .jingsitai-now h2.font-serif { font-synthesis: none; }
 .jingsitai-now h2.font-serif { letter-spacing: 0.025em; }
 
