@@ -58,7 +58,7 @@ export default function AppSidebar() {
                 }`}
               >
                 <Icon className="size-4.5 shrink-0" strokeWidth={1.5} />
-                {!collapsed && <span className="jingsitai-editorial text-[16px] font-normal tracking-wide">{item.label}</span>}
+                {!collapsed && <span className="jingsitai-editorial text-[16px] tracking-wide">{item.label}</span>}
               </NavLink>
             );
           })}
@@ -71,7 +71,7 @@ export default function AppSidebar() {
             <User className="size-4" strokeWidth={1.5} />
           </div>
           <div className={collapsed ? "hidden" : "flex-1 min-w-0"}>
-            <div className="text-sm font-normal truncate text-foreground">
+            <div className="jingsitai-ui-text text-sm truncate text-foreground">
               {user?.name || '访客'}
             </div>
             <div className="jingsitai-editorial text-xs text-muted-foreground truncate">
