@@ -26,7 +26,7 @@ export default function AppSidebar() {
             <Leaf className="size-5" strokeWidth={1.5} />
           </div>
           <div className={collapsed ? "hidden" : "flex-1 min-w-0"}>
-            <div className="text-sm font-medium text-foreground truncate tracking-wide">静思台</div>
+            <div className="jingsitai-brand-title text-lg text-foreground truncate tracking-wide">静思台</div>
             <div className="text-xs text-muted-foreground truncate font-normal">一座安静的书房</div>
           </div>
         </div>
