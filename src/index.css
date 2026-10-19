@@ -21,7 +21,7 @@
   --color-warning: #A7A994;
   --radius: 0.75rem;
   --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
-  --font-serif: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", "SimSun", serif;
 }
 
 @layer base {
@@ -35,13 +35,13 @@
 .jingsitai-focus-card { box-shadow: 0 12px 42px -36px rgba(58,53,44,.24); }
 .jingsitai-timer { font-variant-numeric: tabular-nums; }
 .font-serif, .jingsitai-editorial, .jingsitai-brand-title {
-  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+  font-family: "Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", "SimSun", serif;
   font-weight: 400;
   font-synthesis: none;
 }
 .jingsitai-brand-title { font-weight: 500; }
 .jingsitai-content-title {
-  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+  font-family: "Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", "SimSun", serif;
   font-weight: 400;
   font-size: 1.125rem;
   line-height: 1.65;
@@ -66,3 +66,14 @@
 :root { color-scheme: light; }
 body { background-color: #FCFCF8; }
 .jingsitai-focus-card { background: #FFFFFF; }
+
+/* V0.2.6 typography consolidation — one editorial family across all sections */
+:root { --jingsitai-editorial-font: "Noto Serif SC", "Songti SC", "STSong", serif; --jingsitai-number-font: Georgia, "Times New Roman", serif; }
+#root h1, #root h2, #root h3, #root .jingsitai-content-title, #root .jingsitai-editorial, #root .jingsitai-brand-title {
+  font-family: var(--jingsitai-editorial-font);
+  font-synthesis: none;
+}
+#root h1, #root h2, #root h3 { font-weight: 400; }
+#root .tabular-nums:not(.jingsitai-timer) { font-family: var(--jingsitai-number-font); font-variant-numeric: tabular-nums; }
+#root .jingsitai-timer { font-family: var(--jingsitai-number-font); font-variant-numeric: lining-nums tabular-nums; font-weight: 400; }
+#root button, #root input, #root textarea, #root select { font-family: var(--font-sans); }
