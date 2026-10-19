@@ -27,7 +27,7 @@ export default function AppSidebar() {
           </div>
           <div className={collapsed ? "hidden" : "flex-1 min-w-0"}>
             <div className="jingsitai-brand-title text-lg text-foreground truncate tracking-wide">静思台</div>
-            <div className="text-xs text-muted-foreground truncate font-normal">一座安静的书房</div>
+            <div className="jingsitai-editorial text-xs text-muted-foreground truncate">一座安静的书房</div>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function AppSidebar() {
                 }`}
               >
                 <Icon className="size-4.5 shrink-0" strokeWidth={1.5} />
-                {!collapsed && <span className="text-sm font-normal tracking-wide">{item.label}</span>}
+                {!collapsed && <span className="jingsitai-editorial text-[16px] font-normal tracking-wide">{item.label}</span>}
               </NavLink>
             );
           })}
@@ -74,7 +74,7 @@ export default function AppSidebar() {
             <div className="text-sm font-normal truncate text-foreground">
               {user?.name || '访客'}
             </div>
-            <div className="text-xs text-muted-foreground truncate font-normal">
+            <div className="jingsitai-editorial text-xs text-muted-foreground truncate">
               今日安好
             </div>
           </div>
