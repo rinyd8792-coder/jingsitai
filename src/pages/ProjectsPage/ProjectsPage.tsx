@@ -166,7 +166,7 @@ export default function ProjectsPage() {
                                 ) : (
                                   taskNodes.map((node) => (
                                     <div key={node.id} className="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-muted/30">
-                                      <div className={`size-2 rounded-full shrink-0 ${node.status === 'done' ? 'bg-emerald-500' : node.status === 'doing' ? 'bg-primary' : 'bg-border'}`} />
+                                      <div className={`size-2 rounded-full shrink-0 ${node.status === 'done' ? 'bg-[#819184]' : node.status === 'doing' ? 'bg-primary' : 'bg-border'}`} />
                                       <span className={`flex-1 text-sm font-light truncate ${node.status === 'done' ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{node.name}</span>
                                       <span className="text-xs text-muted-foreground/70 font-light tabular-nums shrink-0">
                                         {new Date(node.startTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
