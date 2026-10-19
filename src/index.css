@@ -1,27 +1,27 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #F5F2ED;
+  --color-background: #F8F8F2;
   --color-foreground: #2C2C2C;
-  --color-card: #FAF8F5;
+  --color-card: #FDFCF9;
   --color-card-foreground: #2C2C2C;
-  --color-primary: #8BA888;
-  --color-primary-foreground: #FFFFFF;
-  --color-secondary: #E8E4DD;
+  --color-primary: #789477;
+  --color-primary-foreground: #FDFCF9;
+  --color-secondary: #F1F4ED;
   --color-secondary-foreground: #3A3A3A;
-  --color-muted: #EDEAE4;
-  --color-muted-foreground: #8A8A8A;
-  --color-accent: #D4C5A9;
+  --color-muted: #F1F4ED;
+  --color-muted-foreground: #626660;
+  --color-accent: #DCE8DA;
   --color-accent-foreground: #3A3A3A;
   --color-destructive: #C47B7B;
-  --color-destructive-foreground: #FFFFFF;
-  --color-border: #D8D4CC;
-  --color-input: #D8D4CC;
-  --color-ring: #8BA888;
-  --color-warning: #C4A77D;
+  --color-destructive-foreground: #FDFCF9;
+  --color-border: #E5EAE2;
+  --color-input: #E5EAE2;
+  --color-ring: #789477;
+  --color-warning: #A7A994;
   --radius: 0.75rem;
-  --font-sans: "Noto Sans SC", system-ui, -apple-system, sans-serif;
-  --font-serif: "Noto Serif SC", Georgia, serif;
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", "SimSun", serif;
 }
 
 @layer base {
@@ -29,3 +29,57 @@
     @apply bg-background text-foreground font-sans antialiased;
   }
 }
+
+/* V0.2.6 · 妙搭视觉：宋体印刷标题 + Georgia 衬线数字 */
+.jingsitai-now { letter-spacing: 0.005em; }
+.jingsitai-focus-card { box-shadow: 0 12px 42px -36px rgba(58,53,44,.24); }
+.jingsitai-timer { font-variant-numeric: tabular-nums; }
+.font-serif, .jingsitai-editorial, .jingsitai-brand-title {
+  font-family: "Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", "SimSun", serif;
+  font-weight: 400;
+  font-synthesis: none;
+}
+.jingsitai-brand-title { font-weight: 500; }
+.jingsitai-content-title {
+  font-family: "Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", "SimSun", serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  letter-spacing: 0.015em;
+}
+.jingsitai-ui-text { font-family: var(--font-sans); font-weight: 400; }
+.jingsitai-now .jingsitai-timer { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.025em; }
+.jingsitai-now h1.font-serif, .jingsitai-now h2.font-serif { font-synthesis: none; }
+.jingsitai-now h2.font-serif { letter-spacing: 0.025em; }
+
+.jingsitai-now .text-muted-foreground { color: #626660; }
+@media (prefers-reduced-motion: reduce) { .jingsitai-now *, .jingsitai-now *::before { transition-duration: 0.01ms !important; } }
+
+/* 观夏系安静书房：留白为主，草木色仅用于状态和指引 */
+.jingsitai-focus-card { border-color: #E5EAE2; }
+.jingsitai-now .focus-action { background: #F4F6F0; border-color: #E6ECE3; }
+.jingsitai-now .focus-action-label { color: #626963; }
+.jingsitai-now .focus-complete { background: #688C69; }
+.jingsitai-now .focus-complete:hover { background: #577A59; }
+
+/* 统一的大面积表面不染色；保留深浅区分以提升注意力清晰度 */
+:root { color-scheme: light; }
+body { background-color: #F8F8F2; }
+.jingsitai-focus-card { background: #FDFCF9; }
+
+/* Editorial type system: the Latin forms use Georgia, Chinese glyphs use serif Song-style faces. */
+:root {
+  --jingsitai-editorial-font: Georgia, "Times New Roman", "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --jingsitai-number-font: Georgia, "Times New Roman", serif;
+}
+#root h1, #root h2, #root h3, #root .font-serif, #root .jingsitai-editorial, #root .jingsitai-brand-title, #root .jingsitai-content-title {
+  font-family: var(--jingsitai-editorial-font);
+  font-synthesis: none;
+  font-weight: 400;
+}
+#root .jingsitai-brand-title { font-weight: 500; }
+#root .jingsitai-now h1 { letter-spacing: .2em; }
+#root .jingsitai-now h2 { letter-spacing: .055em; }
+#root .jingsitai-timer, #root .tabular-nums { font-family: var(--jingsitai-number-font); font-variant-numeric: lining-nums tabular-nums; }
+#root .jingsitai-timer { font-size: clamp(4.2rem, 6.4vw, 6.2rem); letter-spacing: -.045em; line-height: 1.05; }
+#root button, #root input, #root textarea, #root select { font-family: var(--font-sans); }

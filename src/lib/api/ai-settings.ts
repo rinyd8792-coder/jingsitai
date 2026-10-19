@@ -1,7 +1,7 @@
 import { PROVIDER_DEFAULTS } from '@/lib/ai/provider-defaults';
 import type { AIProfile, AIProvider, AISettingsV2, AIPurpose } from '@/lib/ai/types';
 export type { AIProvider, AIProfile, AISettingsV2, AIPurpose };
-const KEY_V1='jingsitai:ai-settings:v1', KEY_V2='jingsitai:ai-settings:v2';
+const KEY_V1='jingsitai:preview:ai-settings:v1', KEY_V2='jingsitai:preview:ai-settings:v2';
 function newProfile(provider:AIProvider,name?:string):AIProfile{const d=PROVIDER_DEFAULTS[provider];return{id:`ai-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,name:name||provider,provider,baseUrl:d.baseUrl,apiKey:'',proxyUrl:'',model:d.model,enabled:true}}
 export function createAIProfile(provider:AIProvider,name?:string){return newProfile(provider,name)}
 const starter=newProfile('openai','主模型');

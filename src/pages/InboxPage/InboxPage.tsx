@@ -82,7 +82,7 @@ export default function InboxPage() {
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-light text-foreground tracking-wide flex items-center gap-2">
+          <h1 className="font-serif text-2xl font-normal text-foreground tracking-wide flex items-center gap-2">
             <Inbox className="size-6 text-primary" strokeWidth={1.5} />
             拾思
           </h1>
@@ -139,7 +139,7 @@ export default function InboxPage() {
                 <button onClick={() => openAsTask(item)} title="转为任务" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-primary">
                   <ArrowRight className="size-4" />
                 </button>
-                <button onClick={() => handleProcess(item.id)} title="标记已整理" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-emerald-600">
+                <button onClick={() => handleProcess(item.id)} title="标记已整理" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-[#6E806F]">
                   <CheckCircle className="size-4" />
                 </button>
                 <button onClick={() => setDeleteId(item.id)} title="删除" className="size-8 rounded hover:bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-destructive">
