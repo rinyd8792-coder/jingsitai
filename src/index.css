@@ -21,7 +21,7 @@
   --color-warning: #C4A77D;
   --radius: 0.75rem;
   --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
-  --font-serif: "ZCOOL XiaoWei", "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  --font-serif: "LXGW WenKai", "Kaiti SC", "KaiTi", "Songti SC", serif;
 }
 
 @layer base {
@@ -34,9 +34,11 @@
 .jingsitai-now { letter-spacing: 0.005em; }
 .jingsitai-focus-card { box-shadow: 0 12px 42px -36px rgba(58,53,44,.24); }
 .jingsitai-timer { font-variant-numeric: tabular-nums; }
-.font-serif { font-family: "ZCOOL XiaoWei", "Songti SC", "STSong", "Noto Serif CJK SC", serif; }
+.font-serif { font-family: "LXGW WenKai", "Kaiti SC", "KaiTi", "Songti SC", serif; }
 .jingsitai-now .jingsitai-timer { font-family: "DM Mono", "Courier New", monospace; font-weight: 400; font-feature-settings: "tnum" 1; letter-spacing: -0.045em; }
 .jingsitai-now h1.font-serif, .jingsitai-now h2.font-serif { font-synthesis: none; }
-.jingsitai-now h2.font-serif { letter-spacing: 0.035em; }
+.jingsitai-now h2.font-serif { letter-spacing: 0.025em; }
+/* 只让展示性标题拥有纸本文学感，正文和操作仍为易读黑体 */
+.jingsitai-brand-title { font-family: "LXGW WenKai", "Kaiti SC", "KaiTi", "Songti SC", serif; font-weight: 500; }
 .jingsitai-now .text-muted-foreground { color: #706E69; }
 @media (prefers-reduced-motion: reduce) { .jingsitai-now *, .jingsitai-now *::before { transition-duration: 0.01ms !important; } }
