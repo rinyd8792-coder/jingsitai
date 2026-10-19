@@ -144,7 +144,7 @@ export default function NowV2Page() {
         <div className="text-right text-xs font-normal tracking-widest text-muted-foreground"><div>此时</div><time className="mt-2 block font-serif text-2xl tracking-normal text-foreground">{formatTime(new Date().toISOString())}</time></div>
       </header>
       <section className="jingsitai-focus-card relative overflow-hidden rounded-[18px] border border-border/30 bg-card px-6 py-7 md:px-10 md:py-8">
-        <div className="absolute inset-y-0 left-0 w-1.5 bg-[#A6AC9D]" aria-hidden="true" />
+        <div className="absolute inset-y-0 left-0 w-1.5 bg-[#C7D9C6]" aria-hidden="true" />
         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
           <Link to={'/tasks/' + currentTask.id} className="rounded-full border border-border/50 px-3 py-1 text-xs hover:text-primary">{currentTask.title}</Link>
           <span className="text-sm">{currentTask.deliverable || currentTask.description || '当前任务'}</span>
@@ -166,7 +166,7 @@ export default function NowV2Page() {
               {currentFocus.isPaused ? <Play className="size-4" /> : <Pause className="size-4" />}
               {currentFocus.isPaused ? '继续' : '暂停'}
             </button>
-            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#616B5F]"><CheckCircle2 className="size-4" />完成节点</button>
+            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#577A59]"><CheckCircle2 className="size-4" />完成节点</button>
           </div>
         </div>
         <div className="mt-5 h-1 rounded-full bg-border/45 overflow-hidden"><div className="h-full rounded-full bg-primary/65 transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
