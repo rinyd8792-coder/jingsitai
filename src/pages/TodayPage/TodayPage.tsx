@@ -105,7 +105,7 @@ export default function TodayPage() {
                         <span className="text-xs px-2 py-0.5 rounded-md border border-border/60 text-muted-foreground font-light">优先级 {PRIORITY_LABEL[node.priority]}</span>
                         {task && <span className="text-xs px-2 py-0.5 rounded-md border border-border/60 text-muted-foreground font-light">{task.title}</span>}
                       </div>
-                      <h3 className={`text-base font-light mt-1 ${isDone ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{node.title || node.name}</h3>
+                      <h3 className={`jingsitai-content-title mt-1 ${isDone ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{node.title || node.name}</h3>
                       <div className="mt-2 text-xs text-muted-foreground">
                         计划 {plannedMinutes} 分钟 · 实际 {actualMinutes === null ? '进行中 / 未记录' : actualMinutes + ' 分钟'}{node.delayReason ? ' · 延期：' + node.delayReason : ''}
                       </div>
