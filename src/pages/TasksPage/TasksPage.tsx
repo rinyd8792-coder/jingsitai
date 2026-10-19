@@ -197,7 +197,7 @@ export default function TasksPage() {
                     {updatingId === task.id
                       ? <Loader2 className="size-4 animate-spin" />
                       : isDone
-                        ? <CheckCircle2 className="size-5 text-emerald-600" />
+                        ? <CheckCircle2 className="size-5 text-[#6E806F]" />
                         : <CircleDot className="size-4" />}
                   </button>
 
