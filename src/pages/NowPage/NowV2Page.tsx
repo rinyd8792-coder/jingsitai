@@ -144,7 +144,7 @@ export default function NowV2Page() {
         <div className="text-right text-xs font-normal tracking-widest text-muted-foreground"><div>此时</div><time className="mt-2 block font-serif text-2xl tracking-normal text-foreground">{formatTime(new Date().toISOString())}</time></div>
       </header>
       <section className="jingsitai-focus-card relative overflow-hidden rounded-[18px] border border-border/30 bg-card px-6 py-7 md:px-10 md:py-8">
-        <div className="absolute inset-y-0 left-0 w-1.5 bg-[#B8AC99]" aria-hidden="true" />
+        <div className="absolute inset-y-0 left-0 w-1.5 bg-[#A5AE9B]" aria-hidden="true" />
         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
           <Link to={'/tasks/' + currentTask.id} className="rounded-full border border-border/50 px-3 py-1 text-xs hover:text-primary">{currentTask.title}</Link>
           <span className="text-sm">{currentTask.deliverable || currentTask.description || '当前任务'}</span>
@@ -152,8 +152,8 @@ export default function NowV2Page() {
         </div>
         <h2 className="mt-6 max-w-4xl font-serif text-[clamp(1.9rem,2.9vw,2.85rem)] font-normal leading-[1.55] tracking-wide text-foreground">{currentNode.title || currentNode.name}</h2>
         <p className="mt-2 text-sm font-normal tracking-wide text-muted-foreground">{formatTime(plannedStart)} — {formatTime(plannedEnd)}</p>
-        <div className="mt-7 rounded-2xl border border-[#DDD5C8] bg-[#F1EDE5] px-4 py-3">
-          <div className="flex items-center gap-2 text-sm font-medium text-[#6D6252]"><ArrowRight className="size-4" />现在只做这一步</div>
+        <div className="mt-7 rounded-2xl focus-action border px-4 py-3">
+          <div className="flex items-center gap-2 focus-action-label text-sm font-medium"><ArrowRight className="size-4" />现在只做这一步</div>
           <p className="mt-2 text-lg font-medium leading-8 text-foreground">{nextAction?.content || '先完成当前节点的第一个具体动作'}</p>
         </div>
         <div className="mt-5 flex flex-wrap items-end justify-between gap-5">
@@ -166,7 +166,7 @@ export default function NowV2Page() {
               {currentFocus.isPaused ? <Play className="size-4" /> : <Pause className="size-4" />}
               {currentFocus.isPaused ? '继续' : '暂停'}
             </button>
-            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl bg-[#766E60] px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#61594C]"><CheckCircle2 className="size-4" />完成节点</button>
+            <button onClick={() => setShowCompletion(true)} className="inline-flex items-center gap-2 rounded-xl focus-complete px-5 py-3 text-sm text-primary-foreground transition-colors hover:bg-[#6F6655]"><CheckCircle2 className="size-4" />完成节点</button>
           </div>
         </div>
         <div className="mt-5 h-px bg-border/50"><div className="h-px bg-primary transition-all duration-700" style={{ width: String(progress) + '%' }} /></div>
