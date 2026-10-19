@@ -196,7 +196,7 @@ export default function TaskDetailPage() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-base font-serif font-normal">{node.title || node.name}</h3>
+                      <h3 className="jingsitai-content-title">{node.title || node.name}</h3>
                       <span className="rounded-full border border-border px-2 py-0.5 text-[11px] text-muted-foreground">{STATUS_LABEL[node.status]}</span>
                       {isCurrent && <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] text-primary">当前节点</span>}
                     </div>
